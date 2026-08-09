@@ -491,45 +491,34 @@ btn.addEventListener("click", function () {
 
 </script>
 <script>
-    const url = "https://script.google.com/macros/s/AKfycbykiuy-If0vCZ00G_-ICWQzCwUWozN0Rm355EpyNr2cY_RpUc3Pc4OcKsJlkRCNbEyiMw/exec";
-
-function login() {
+    function login() {
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
 
-    if(username === "" || password === ""){
+    // TÀI KHOẢN ĐƯỢC PHÉP ĐĂNG NHẬP
+    const correctUsername = "Tần Dực";
+    const correctPassword = "Taolachuong123";
+
+    if (username === "" || password === "") {
         alert("Vui lòng nhập tên người chơi và mật khẩu!");
         return;
     }
 
-    fetch(
-        url +
-        "?username=" + encodeURIComponent(username) +
-        "&password=" + encodeURIComponent(password)
-    )
-    .then(response => response.text())
-    .then(result => {
+    if (username === correctUsername && password === correctPassword) {
 
-        if(result.trim() === "success"){
+        // Đúng tài khoản → hiện bảng phần thưởng
+        document.getElementById("rewardPage").style.display = "flex";
 
-            document.getElementById("rewardPage").style.display = "flex";
+    } else {
 
-        }else{
+        // Sai tài khoản hoặc mật khẩu
+        alert("Sai tên người chơi hoặc mật khẩu!");
 
-            alert("Sai tên người chơi hoặc mật khẩu!");
-
-        }
-
-    })
-    .catch(error=>{
-        console.log(error);
-        alert("Không kết nối được Apps Script!");
-    });
-
-
+    }
 }
-function closeReward(){
+
+function closeReward() {
     document.getElementById("rewardPage").style.display = "none";
 }
     </script>
