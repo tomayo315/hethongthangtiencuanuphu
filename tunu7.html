@@ -997,88 +997,35 @@ btn.addEventListener("click", function () {
 
 </script>
 <script>
-    const url = "https://script.google.com/macros/s/AKfycbykiuy-If0vCZ00G_-ICWQzCwUWozN0Rm355EpyNr2cY_RpUc3Pc4OcKsJlkRCNbEyiMw/exec";
-
-
-function login() {
+   function login() {
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
+
+    // TÀI KHOẢN ĐƯỢC PHÉP ĐĂNG NHẬP
+    const correctUsername = "Hạ Mật Nhu";
+    const correctPassword = "nhuxinhso1tg";
 
     if (username === "" || password === "") {
         alert("Vui lòng nhập tên người chơi và mật khẩu!");
         return;
     }
 
-    fetch(
-        url +
-        "?username=" + encodeURIComponent(username) +
-        "&password=" + encodeURIComponent(password)
-    )
-    .then(response => response.text())
-    .then(result => {
+    if (username === correctUsername && password === correctPassword) {
 
-        result = result.trim();
+        // Đúng tài khoản → hiện bảng phần thưởng
+        document.getElementById("rewardPage").style.display = "flex";
 
-        console.log("Apps Script trả về:", result);
+    } else {
 
-        if (result === "success") {
+        // Sai tài khoản hoặc mật khẩu
+        alert("Sai tên người chơi hoặc mật khẩu!");
 
-            // Ẩn phần đăng nhập
-            document.querySelector(".login-box").style.display = "none";
-
-            // Hiện bảng chỉ số
-            document.getElementById("rewardPage").style.display = "flex";
-
-        } 
-        else if (result === "fail") {
-
-            alert("Sai tên đăng nhập hoặc mật khẩu!");
-
-        } 
-        else if (result === "NO_SHEET") {
-
-            alert("Không tìm thấy Sheet1!");
-
-        } 
-        else if (result === "MISSING") {
-
-            alert("Chưa gửi username hoặc password!");
-
-        } 
-        else {
-
-            alert("Lỗi Apps Script: " + result);
-
-        }
-
-    })
-    .catch(error => {
-
-        console.error(error);
-
-        alert("Không kết nối được Google Sheet!");
-
-    });
+    }
 }
 
 function closeReward() {
-
     document.getElementById("rewardPage").style.display = "none";
-
-    document.querySelector(".login-box").style.display = "block";
-}
-/* =========================
-   ĐÓNG BẢNG
-========================= */
-
-function closeReward() {
-
-    document.getElementById("rewardPage").style.display = "none";
-
-    // Hiện lại phần đăng nhập nếu muốn đăng nhập lại
-    document.querySelector(".login-box").style.display = "block";
-
 }
     </script>
 </body>
