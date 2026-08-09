@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vai diễn hoàng cung</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <style>
+.info-frame{
+    position: relative;
+    width:94%;
+    max-width:1550px;
+    margin:40px auto;
+    padding:45px 10px;
+    min-height: 650px;
+    height: 650px;
+    background-image:url("img/nenthongtin.jpg");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    background-position:center 50px; /* dịch xuống 30px */
+}
+.pham-grid{
+    position: relative;
+    margin-top: 40px;
+}
+
+.pham-row{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:-50px;              /* khoảng cách giữa các ảnh */
+    width:100%;
+    margin-bottom:40px;
+}
+
+.bottom-row{
+    margin-top:-20px;   /* nếu muốn chỉ chỉnh khoảng cách với hàng trên */
+}
+.pham-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pham-item img{
+    width:250px;
+    height:auto;
+    display:block;
+    margin-top:-50px;
+}
+
+.pham-item button{
+    margin-top:-70px;
+    border:none;
+    background:#b5953f;
+    color:white;
+    padding:8px 30px;
+    border-radius:30px;
+    font-size:17px;
+    font-family:"Alegreya",serif;
+    cursor:pointer;
+}
+
+.pham-item button:hover{
+    background:#9f7d25;
+}
+.pham-btn{
+    min-width: 140px;      /* nhỏ hơn */
+    padding: 6px 18px;
+    font-size: 18px;
+    border-radius: 25px;
+}
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9998;
+}
+
+.info-box{
+    display:none;
+    position:fixed;
+    width:760px;
+    max-width:90%;
+    background:#fffdf6;
+    border:3px solid #b5953f;
+    border-radius:25px;
+    padding:35px 45px;
+    z-index:9999;
+}
+
+.info-box h2{
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.info-box p{
+    font-size:26px;
+    line-height:1.8;
+}
+.info-box h2{
+    text-align:center;
+    font-size:30px;
+    font-weight:800;
+    color:#9f7d25;
+    margin-bottom:18px;
+}
+.info-box h3{
+    text-align:center;
+    font-size:30px;
+    font-weight:800;
+    color:#9f7d25;
+    margin-bottom:18px;
+
+}
+
+.info-box p{
+    font-size:24px;
+    line-height:1.8;
+    color:#8d7530;
+    text-align:center;
+}
+
+.info-box p b{
+    color:#8b6b1b;
+}
+.page-prev,
+.page-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 55px;
+    height: 80px;
+
+    border: none;
+    background: transparent;
+
+    color: #9d8331;
+    font-family: Arial, sans-serif;
+    font-size: 70px;
+    line-height: 1;
+
+    cursor: pointer;
+    z-index: 20;
+}
+
+.page-prev {
+    left: 10px;
+}
+
+.page-next {
+    right: 10px;
+}
+
+.page-prev:hover,
+.page-next:hover {
+    color: #b5953f;
+}
+#page1 {
+    position: relative;
+    width: 100%;
+}
+
+#page2 {
+    display: none;
+    position: relative;
+    width: 100%;
+    min-height: 550px;
+    padding-top: 0;
+}
+
+.new-page-image {
+    position: absolute;
+    top: -20px;
+    left: 0;
+
+    width: 100%;
+    height: 250px;
+
+    object-fit: fill;
+    display: block;
+
+    margin: 0;
+}
+
+
+.page-next,
+.page-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+
+    width: 55px;
+    height: 80px;
+
+    border: none;
+    background: transparent;
+
+    color: #9d8331;
+    font-family: Arial, sans-serif;
+    font-size: 70px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.page-next {
+    right: 10px;
+}
+
+.page-prev {
+    left: 10px;
+}
+
+.page-next:hover,
+.page-prev:hover {
+    color: #b5953f;
+}
+.pham-row2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 0 20px;
+}   
+
+.pham-item2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 250px;
+    flex-shrink: 0;
+}
+
+.pham-item2 img {
+    width: 250px;
+    height: auto;
+    display: block;
+    margin: 0;
+}
+
+.pham-item2 button {
+    margin-top: -75px;
+    border: none;
+    background: #b5953f;
+    color: white;
+    padding: 8px 25px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-family: "Alegreya", serif;
+    cursor: pointer;
+}
+
+/* ================= MOBILE ================= */
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+    /* Khung chính */
+    .info-frame {
+        position: relative;
+
+        width: 96%;
+        height: auto;
+        min-height: 600px;
+
+        margin: 20px auto;
+        padding: 25px 10px 50px;
+
+        box-sizing: border-box;
+
+        background-size: 100% 100%;
+        background-position: center top;
+    }
+
+    /* Lưới ảnh */
+    .pham-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        width: 100%;
+
+        gap: 10px 10px;
+
+        margin-top: 20px;
+
+        justify-items: center;
+        align-items: start;
+        transform: translateX(-20px);
+    }
+
+    /* Bỏ hàng ngang trên PC */
+    .pham-row,
+    .bottom-row {
+        display: contents;
+    }
+
+    /* Từng ô */
+    .pham-item {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        box-sizing: border-box;
+    }
+
+    /* Ảnh */
+    .pham-item img {
+        width: 200px;
+        height: auto;
+
+        display: block;
+
+        margin: 0 auto;
+    }
+
+    /* Nút bên dưới ảnh */
+    .pham-item button {
+        width: 115px;
+        min-height: 36px;
+
+        margin-top: -60px;
+        padding: 5px 8px;
+
+        border: none;
+        border-radius: 20px;
+
+        background: #b5953f;
+        color: white;
+
+        font-family: "Alegreya", serif;
+        font-size: 13px;
+        line-height: 1.2;
+
+        cursor: pointer;
+    }
+
+    /* ================= PAGE 2 ================= */
+
+    #page2 {
+        position: relative;
+
+        width: 100%;
+        min-height: 550px;
+
+        padding: 10px 0 40px;
+
+        box-sizing: border-box;
+        transform: translateX(-20px);
+    }
+
+    .pham-row2 {
+        position: relative;
+
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 30px 10px;
+
+        width: 100%;
+
+        margin: 0;
+        padding: 10px;
+
+        box-sizing: border-box;
+    }
+
+    .pham-item2 {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+/* Ảnh Page 2 giống Page 1 */
+.pham-item2 img {
+    width: 200px;
+    height: auto;
+
+    display: block;
+    margin: 0 auto;
+}
+
+/* Nút Page 2 giống Page 1 */
+.pham-item2 button {
+    width: 115px;
+    min-height: 36px;
+
+    margin-top: -60px;
+    padding: 5px 8px;
+
+    border: none;
+    border-radius: 20px;
+
+    background: #b5953f;
+    color: white;
+
+    font-family: "Alegreya", serif;
+    font-size: 13px;
+    line-height: 1.2;
+
+    cursor: pointer;
+}
+
+    /* ================= NÚT CHUYỂN TRANG ================= */
+
+    .page-next,
+.page-prev {
+    position: fixed;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 65px;
+    height: 60px;
+
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: #9d8331;
+
+    font-family: Arial, sans-serif;
+    font-size: 100px;
+    line-height: 1;
+
+    z-index: 9999;
+}
+
+.page-next {
+    right: 5px;
+}
+
+.page-prev {
+    left: 5px;
+}
+
+    /* ================= Ô THÔNG TIN ================= */
+
+    .info-box {
+        position: fixed;
+
+        width: 90%;
+        max-width: none;
+
+        left: 5% !important;
+        right: 5%;
+
+        top: 50% !important;
+
+        transform: translateY(-50%);
+
+        padding: 20px;
+
+        box-sizing: border-box;
+
+        border: 2px solid #b5953f;
+        border-radius: 18px;
+
+        background: #fffdf6;
+
+        z-index: 9999;
+    }
+
+    .info-box h2 {
+        font-size: 23px;
+
+        margin-bottom: 10px;
+
+        text-align: center;
+    }
+
+    .info-box h3 {
+        font-size: 21px;
+
+        margin-bottom: 10px;
+
+        text-align: center;
+    }
+
+    .info-box p {
+        font-size: 16px;
+
+        line-height: 1.6;
+
+        text-align: justify;
+    }
+
+    /* Overlay */
+    .overlay {
+        position: fixed;
+
+        inset: 0;
+
+        background: rgba(0, 0, 0, 0.25);
+
+        z-index: 9998;
+    }
+
+    /* Navbar mobile */
+    .navbar-custom {
+        flex-wrap: wrap;
+    }
+
+    .menu-right {
+        width: 100%;
+    }
+}
+
+        </style>
+        </head>
+        <body>
+            <!-- Banner Background -->
+        <div class="banner" style="background-image:url('img/nen.jpg');">
+
+            <!-- Navbar -->
+            <div class="navbar-custom">
+                <!-- bên trái -->
+                <a href="index.html">TRANG CHỦ</a>
+<button class="menu-toggle" type="button">☰ MỤC LỤC</button>
+
+                <!-- bên phải -->
+                <div class="menu-right" id="mobileMenu">
+                    <a href="thoigian.html">THỜI GIAN</a>
+
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                            HẬU CUNG
+                        </a>
+                        <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="info-frame">
+
+    <!-- ================= PAGE 1 ================= -->
+    <div id="page1">
+
+        <div class="pham-grid">
+
+            <!-- Hàng 1 -->
+            <div class="pham-row">
+
+                <div class="pham-item">
+                    <img src="img/thaihau.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='thaihau.html'">
+                        <b>THÁI HẬU</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/hoanghau.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='hoanghau.html'">
+                        <b>HOÀNG HẬU</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/kytieuphi.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='kytieuphi.html'">
+                        <b>KỲ TIỂU PHI</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/hoangquy.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='hoangquy.html'">
+                        <b>TRINH THUẬN <br>HOÀNG QUÝ PHI</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/khiemy.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='khiemy.html'">
+                        <b>KHIÊM Ý TẦN</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/hidung.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='hidung.html'">
+                        <b>HI <br>DUNG HOA</b>
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- Hàng 2 -->
+            <div class="pham-row bottom-row">
+
+                <div class="pham-item">
+                    <img src="img/donquy.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='donquy.html'">
+                        <b>ĐÔN <br>QUÝ NHÂN</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/tunu1.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='tunu1.html'">
+                        <b>TÚ NỮ</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/tunu2.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='tunu2.html'">
+                        <b>TÚ NỮ</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/tunu3.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='tunu3.html'">
+                        <b>TÚ NỮ</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/tunu4.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='tunu4.html'">
+                        <b>TÚ NỮ</b>
+                    </button>
+                </div>
+
+                <div class="pham-item">
+                    <img src="img/tunu5.png" alt="">
+                    <button class="pham-btn" onclick="window.location.href='tunu5.html'">
+                        <b>TÚ NỮ</b>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- NÚT SANG PAGE 2 -->
+        <button class="page-next" onclick="nextPage()">›</button>
+
+    </div>
+
+
+    <!-- ================= PAGE 2 ================= -->
+    <div id="page2">
+
+        <!-- NÚT QUAY LẠI PAGE 1 -->
+        <button class="page-prev" onclick="prevPage()">‹</button>
+
+        <!-- ẢNH NỀN PAGE 2 NẰM TRÊN -->
+
+        <!-- 4 HÌNH NẰM TRÊN 1 HÀNG -->
+        <div class="pham-row2">
+
+            <div class="pham-item2">
+                <img src="img/tunu6.jpg" alt="">
+                <button class="pham-btn" onclick="window.location.href='tunu6.html'">
+                    <b>TÚ NỮ</b>
+                </button>
+            </div>
+
+            <div class="pham-item2">
+                <img src="img/tunu7.jpg" alt="">
+                <button class="pham-btn" onclick="window.location.href='tunu7.html'">
+                    <b>TÚ NỮ</b>
+                </button>
+            </div>
+
+            <div class="pham-item2">
+                <img src="img/tunu8.jpg" alt="">
+                <button class="pham-btn" onclick="window.location.href='tunu8.html'">
+                    <b>TÚ NỮ</b>
+                </button>
+            </div>
+
+            <div class="pham-item2">
+                <img src="img/tunu9.jpg" alt="">
+                <button class="pham-btn" onclick="window.location.href='tunu9.html'">
+                    <b>TÚ NỮ</b>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+        
+        <script>
+let currentPage = 1;
+
+function nextPage() {
+    if (currentPage === 1) {
+        document.querySelector(".info-frame").style.backgroundImage =
+            "url('img/nenthongtin.jpg')";
+
+        currentPage = 2;
+    }
+}
+
+function prevPage() {
+    if (currentPage === 2) {
+        document.querySelector(".info-frame").style.backgroundImage =
+            "url('img/nenthongtin.jpg')";
+
+        currentPage = 1;
+    }
+}
+function closeInfo(){
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("infoBox").style.display = "none";
+}
+function nextPage() {
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "block";
+}
+
+function prevPage() {
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page1").style.display = "block";
+}
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+const btn=document.querySelector(".menu-toggle");
+const menu=document.getElementById("mobileMenu");
+if(btn&&menu){btn.addEventListener("click",()=>menu.classList.toggle("show"));}
+</script>
+<div id="overlay" class="overlay" onclick="closeInfo()"></div>
+    <div id="infoBox" class="info-box">
+        <h2 id="infoTitle"></h2>
+        <p id="infoText"></p>
+    </div>
+        </body>
+        </html>

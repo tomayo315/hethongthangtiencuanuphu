@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .character-info{
+    width:94%;
+    max-width:1550px;
+    margin:90px auto 40px;
+    display:flex;
+    justify-content:center;
+}
+
+.character-info img{
+    width:600px;
+    height:auto;
+    display:block;
+    border-radius:12px;
+}
+.login-form{
+    width:600px;
+    margin:40px auto;
+    position:relative;      /* Quan trọng */
+}
+
+.login-form img{
+    width:600px ;
+    display:block;
+    border-radius:12px;
+}
+
+.character-info{
+    margin:90px auto 40px;   /* cách navbar */
+}
+.login-box{
+    position:absolute;
+    top:600px;
+    left:40px;
+    right:40px;
+}
+
+.login-box h4{
+    font-size:23px;
+    color:#9d8331;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.input-row{
+    display:flex;
+    align-items:center;
+    margin-bottom:20px;
+    margin-top:0px;
+}
+
+.input-row label{
+    width:240px;
+    font-size:22px;
+    font-weight:bold;
+    color:#9d8331;
+}
+
+.input-row input{
+    flex:1;
+    height:52px;
+    border:none;
+    border-radius:30px;
+    background:#ffffff;
+    padding:0 20px;
+    font-size:22px;
+    outline:none;
+    box-shadow:0 0 8px rgba(0,0,0,.12);
+}
+
+.login-btn{
+    display:block;
+    margin:20px auto 0;
+    padding:10px 45px;
+    border:none;
+    border-radius:30px;
+    background:#9d8331;
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+}
+.reward-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.35);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    border-radius:12px;
+    z-index:100;
+}
+
+.reward-box{
+    position:relative;
+    background:#fffcf3;
+    padding:20px;
+    border-radius:16px;
+}
+
+.reward-box img{
+    width:300px;
+    max-width:100%;
+    display:block;
+    border-radius:10px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 100px;
+    right: 50px;
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    background: #c7c977;
+    color: #8c9b19;
+    font-size: 28px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 35px;
+    text-align: center;
+    padding: 0;
+}
+
+.close-btn:hover {
+    background: #ddd;
+}
+.reward-image{
+    position:relative;
+    width:520px;
+    max-width:90vw;
+    margin:auto;
+}
+
+.reward-image > img{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:10px;
+}
+
+.text{
+    position:absolute;
+    width:180px;
+    text-align:center;
+    font-family:'Alegreya', serif;
+    font-size:18px;
+    color:#9d8331;
+    font-weight:500;
+    line-height:1.2;
+}
+.character-infor{
+    position:absolute;
+    top:70px;
+    left:40px;
+    right:40px;
+}
+.character-header h2{
+    font-size:23px;
+    color:#9d8331;
+    font-weight:700;
+    margin-bottom:10px;
+}
+.character-header h3 {
+    color: #aaa58e !important;
+    font-size: 19px;
+    font-weight: 700;
+}
+.character-header p {
+    color: #aaa58e !important;
+    font-size: 19px;
+    font-weight: 500;
+}
+.promotion-section{
+   position:absolute;
+    top:300px;
+    left:40px;
+    right:40px;
+}
+.promotion-section h2{
+    font-size:23px;
+    color:#9d8331;
+    font-weight:700;
+    margin-bottom:10px;
+}
+.promotion-section .timeline-item h3 {
+    color: #aaa58e !important;
+    font-size: 19px;
+    font-weight: 800;
+}
+/* Nội dung dưới mốc thời gian */
+.promotion-section .timeline-item p {
+    color: #aaa58e !important;
+    font-size: 19px;
+    font-weight: 500;
+}
+/* Dấu chấm timeline */
+.promotion-section .dot {
+    background: #c4ad55 !important;
+}
+/* =========================================
+   KHUNG CHỈ SỐ
+========================================= */
+
+.stats-box{
+    width:90%;
+    max-width:420px;
+    margin:90px auto;
+    padding:15px 20px 30px;
+    height:600px;
+    background:#fffcf3;
+    border:2px solid #9d8331;
+    border-radius:0 35px 35px 35px;
+
+    box-sizing:border-box;
+}
+.stats-background {
+    position: relative;
+    width: 420px;          /* giảm kích thước ảnh */
+    max-width: 80vw;
+    margin: auto;
+}
+
+/* Ảnh nentile */
+.stats-background .stats-box {
+    position: absolute;
+    top: 4%;
+    left: 5%;
+    width: 90%;
+    margin: 0;
+    padding: 25px 15px 20px;
+
+    background: rgba(255, 252, 243, 0.95);
+
+    border: 2px solid #9d8331;
+    border-radius: 0 30px 30px 30px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   TỪNG CHỈ SỐ
+========================================= */
+
+.stat-item {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+
+/* Tiêu đề */
+
+.stat-item h2 {
+    margin: 0 0 10px;
+
+    font-family: 'Alegreya', serif;
+
+    font-size: 22px;
+
+    line-height: 0.5;
+
+    color: #9d8331;
+
+    font-weight: 800;
+
+    text-align: center;
+}
+
+
+/* =========================================
+   VÒNG TRÒN
+========================================= */
+
+.circle-progress{
+    --percent:0%;
+
+    position:relative;
+
+    width:110px;
+    height:110px;
+
+    margin:0 auto;
+
+    border-radius:50%;
+
+    background:
+        conic-gradient(
+            #ad9141 var(--percent),
+            #e5e0cf var(--percent)
+        );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.circle-inner{
+    width:72px;
+    height:72px;
+
+    border-radius:50%;
+    background:#fffcf3;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.circle-inner span{
+    font-family:'Alegreya',serif;
+    font-size:20px;
+    color:#9d8331;
+    font-weight:500;
+}
+
+
+/* =========================================
+   DÒNG ĐIỂM THĂNG TIẾN
+========================================= */
+
+.promotion-score {
+
+    margin-top: 30px;
+
+    font-family: 'Alegreya', serif;
+
+    font-size: 27px;
+
+    line-height: 1.45;
+
+    color: #9d8331;
+
+    text-align: center;
+
+    font-weight: 500;
+}
+
+
+/* Không để khoảng cách quá lớn ở cuối */
+
+.stat-item:last-child {
+    margin-bottom: 0;
+}
+/* =========================================
+   GIAO DIỆN ADMIN CHỈNH CHỈ SỐ
+========================================= */
+
+.admin-panel {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 25px 25px 30px;
+
+    background: #fffcf3;
+    border: 2px solid #9d8331;
+    border-radius: 0 30px 30px 30px;
+
+    box-sizing: border-box;
+    font-family: 'Alegreya', serif;
+}
+
+/* Tiêu đề ADMIN */
+.admin-panel h2 {
+    margin: 0 0 25px;
+    text-align: center;
+
+    color: #9d8331;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+/* Từng chỉ số */
+.admin-item {
+    margin-bottom: 20px;
+}
+
+/* Tên chỉ số */
+.admin-item label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #9d8331;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Ô nhập phần trăm */
+.admin-item input {
+    width: 100%;
+    height: 45px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #c7b66c;
+    border-radius: 25px;
+
+    background: #fff;
+    padding: 0 18px;
+
+    color: #9d8331;
+    font-family: 'Alegreya', serif;
+    font-size: 19px;
+
+    outline: none;
+}
+
+/* Khi bấm vào ô */
+.admin-item input:focus {
+    border-color: #9d8331;
+    box-shadow: 0 0 6px rgba(157,131,49,.25);
+}
+
+/* Nút lưu */
+.admin-save-btn {
+    display: block;
+
+    width: 100%;
+    height: 45px;
+
+    margin-top: 25px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: #9d8331;
+    color: white;
+
+    font-family: 'Alegreya', serif;
+    font-size: 20px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.admin-save-btn:hover {
+    background: #806b27;
+}
+
+/* Nút đăng xuất admin */
+.admin-logout-btn {
+    display: block;
+
+    width: 100%;
+    height: 40px;
+
+    margin-top: 12px;
+
+    border: 1px solid #9d8331;
+    border-radius: 25px;
+
+    background: transparent;
+    color: #9d8331;
+
+    font-family: 'Alegreya', serif;
+    font-size: 18px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.admin-logout-btn:hover {
+    background: #f3eedc;
+}
+
+/* Thông báo */
+.admin-message {
+    margin-top: 15px;
+
+    text-align: center;
+
+    color: #9d8331;
+    font-size: 17px;
+    font-weight: 600;
+}
+.timeline-info {
+    position: relative;
+    margin-left: 0;
+    padding-left: 22px;
+}
+
+
+/* ĐƯỜNG GẠCH DỌC */
+.timeline-info::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: #c4ad55;
+}
+/* TỪNG MỐC */
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    min-height: 42px;
+}
+
+
+/* CHẤM TRÒN */
+.timeline-item .dot {
+    position: absolute;
+    left: -22px;
+    top: 7px;
+
+    width: 8px;
+    height: 8px;
+
+    background: #c4ad55 !important;
+    border-radius: 50%;
+
+    z-index: 2;
+}
+
+
+/* Nội dung bên phải chấm */
+.timeline-item > div {
+    padding: 0;
+    margin: 0;
+}
+
+
+/* Năm */
+.promotion-section .timeline-item h3 {
+    margin: 0;
+    color: #aaa58e !important;
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+
+/* Nội dung dưới năm */
+.promotion-section .timeline-item p {
+    margin: 3px 0 0;
+    color: #aaa58e !important;
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+    .character-info {
+        width: 94%;
+        margin: 70px auto 30px;
+    }
+
+    .character-info img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+    .character-header h2 {
+        font-size: 18px;
+        margin-bottom: 6px;
+    }
+
+    .character-header h3 {
+        font-size: 15px;
+        line-height: 1.3;
+        margin-bottom: 5px;
+    }
+
+    .character-header p {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    .promotion-section {
+        top: 250px;
+        left: 40px;
+        right: 20px;
+    }
+
+    .promotion-section h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .promotion-section .timeline-item h3 {
+        font-size: 15px;
+        line-height: 1.3;
+    }
+
+    .promotion-section .timeline-item p {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    /* Bảng chỉ số trên điện thoại */
+    .stats-box {
+        width: 92%;
+        max-width: 340px;
+        height: auto;
+        margin: 20px auto;
+        padding: 20px 12px 25px;
+
+        border-radius: 0 25px 25px 25px;
+        border: 2px solid #9d8331;
+
+        box-sizing: border-box;
+    }
+
+    /* Khoảng cách từng chỉ số */
+    .stat-item {
+        margin-bottom: 28px;
+        text-align: center;
+    }
+
+    .stat-item:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Tiêu đề */
+    .stat-item h2 {
+        font-size: 18px;
+        line-height: 1.2;
+        margin: 0 0 12px;
+
+        color: #9d8331;
+        font-weight: 800;
+    }
+
+    /* Vòng tròn nhỏ trên mobile */
+    .circle-progress {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Vòng trắng bên trong */
+    .circle-inner {
+        width: 58px;
+        height: 58px;
+    }
+
+    /* Số % */
+    .circle-inner span {
+        font-size: 17px;
+    }
+
+    /* Điểm thăng tiến */
+    .promotion-score {
+        margin-top: 15px;
+        font-size: 17px;
+        line-height: 1.4;
+    }
+    
+    /* Nút X */
+    .close-btn {
+        top: 5px;
+        right: 5px;
+
+        width: 30px;
+        height: 30px;
+
+        font-size: 22px;
+        line-height: 30px;
+    }
+
+    /* Khung chứa popup */
+    .reward-image {
+        width: 94%;
+        max-width: 340px;
+        margin: auto;
+    }
+     .login-form {
+        width: 94%;
+        max-width: 360px;
+        margin: 25px 17px;
+    }
+
+    .login-form img {
+        width: 105%;
+        max-width: 105%;
+        height: 700px;
+    }
+
+    .login-box {
+        position: absolute;
+        top: 84.5%;
+        left: 40px;
+        right: 20px;
+        transform: translateY(-50%);
+    }
+
+    .login-box h4 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+
+    .input-row {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin-bottom: 12px;
+    }
+
+    .input-row label {
+        width: 100%;
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .input-row input {
+        width: 100%;
+        height: 40px;
+        padding: 0 14px;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+    .login-btn {
+        margin: 15px auto 0;
+        padding: 7px 25px;
+        font-size: 16px;
+    }
+     .admin-panel {
+        width: 94%;
+        max-width: 360px;
+
+        padding: 20px 16px 22px;
+
+        border-radius: 0 25px 25px 25px;
+    }
+
+    .admin-panel h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .admin-item {
+        margin-bottom: 16px;
+    }
+
+    .admin-item label {
+        font-size: 17px;
+        margin-bottom: 5px;
+    }
+
+    .admin-item input {
+        height: 40px;
+        font-size: 17px;
+        padding: 0 15px;
+    }
+
+    .admin-save-btn {
+        height: 40px;
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    .admin-logout-btn {
+        height: 38px;
+        font-size: 16px;
+    }
+
+    .admin-message {
+        font-size: 15px;
+    }
+}
+</style>
+</head>
+<body>
+    <div class="navbar-custom">
+
+    <!-- bên trái -->
+    <a href="index.html">TRANG CHỦ</a>
+    <button class="menu-toggle" type="button">
+    ☰ MỤC LỤC
+</button>
+
+    <!-- bên phải -->
+    <div class="menu-right " id="mobileMenu">
+
+        <a href="thoigian.html">THỜI GIAN</a>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HẬU CUNG
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+    </div>
+    <div class="character-info">
+    <img src="img/infohh.jpg" alt="Thông tin thái hậu">
+</div>
+
+<div class="login-form">
+    <img src="img/othongtin.jpg" alt="">
+    <div class="character-infor">
+
+    <!-- THÔNG TIN NHÂN VẬT -->
+    <div class="character-header">
+
+        <h2>Hài tử</h2>
+
+        <h3>Tam công chúa - Ái Tân Giác La Mẫn Trinh</h3>
+
+        <p>[ Tuổi hiện tại: 4. Sinh ngày 22 tháng 4 năm Tùy Minh thứ 8 ]</p>
+
+    </div>
+    </div>
+
+
+    <!-- HÀNH TRÌNH THĂNG TIẾN -->
+    <div class="promotion-section">
+
+        <h2>Hành trình thăng tiến</h2>
+
+        <div class="timeline-info">
+
+            <div class="timeline-item">
+                <span class="dot"></span>
+
+                <div>
+                    <h3>Năm Tùy Minh thứ 6</h3>
+                    <p>Thế tử phi Thanh quốc công</p>
+                </div>
+            </div>
+
+
+            <div class="timeline-item">
+                <span class="dot"></span>
+
+                <div>
+                    <h3>Năm Khâm Nguyên nguyên niên</h3>
+                    <p>Hoàng hậu</p>
+                </div>
+            </div>
+
+
+            <div class="timeline-item">
+                <span class="dot"></span>
+
+                <div>
+                    <h3>?</h3>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="login-box">
+        <h4>Chỉ số cá nhân</h4>
+
+        <div class="input-row">
+            <label>Tên người chơi:</label>
+            <input type="text" id="username" placeholder="Tên người chơi">
+        </div>
+
+        <div class="input-row">
+            <label>Mật khẩu người chơi:</label>
+            <input type="password" id="password" placeholder="Mật khẩu">
+        </div>
+
+        <button class="login-btn" onclick="login()">Đăng nhập</button>
+    </div>
+</div>
+
+    <div id="rewardPage" class="reward-overlay">
+
+
+    <div class="reward-image">
+        <button class="close-btn" onclick="closeReward()">x</button>
+        <div class="stats-box">
+            <!-- CHỈ SỐ LÓT ĐƯỜNG -->
+            <div class="stat-item">
+                <h2>CHỈ SỐ LÓT ĐƯỜNG</h2>
+
+                <div class="circle-progress" style="--percent:100%;">
+                    <div class="circle-inner">
+                        <span>100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHỈ SỐ MAY MẮN -->
+            <div class="stat-item">
+                <h2>CHỈ SỐ MAY MẮN</h2>
+
+                <div class="circle-progress" style="--percent:0%;">
+                    <div class="circle-inner">
+                        <span>0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KHẢ NĂNG THĂNG TIẾN -->
+            <div class="stat-item">
+                <h2>KHẢ NĂNG THĂNG TIẾN</h2>
+
+                <div class="circle-progress" style="--percent:0%;">
+                    <div class="circle-inner">
+                        <span>0%</span>
+                    </div>
+                </div>
+
+                <div class="promotion-score">
+                    Điểm thăng tiến bậc kế tiếp: -
+                    <br>
+                    Điểm thăng tiến hiện tại: 0
+                </div>
+            </div>
+
+        </div>
+
+</div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const btn = document.querySelector(".menu-toggle");
+const menu = document.getElementById("mobileMenu");
+
+btn.addEventListener("click", function () {
+    menu.classList.toggle("show");
+});
+
+</script>
+<script>
+    const url = "https://script.google.com/macros/s/AKfycbykiuy-If0vCZ00G_-ICWQzCwUWozN0Rm355EpyNr2cY_RpUc3Pc4OcKsJlkRCNbEyiMw/exec";
+
+
+function login() {
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (username === "" || password === "") {
+        alert("Vui lòng nhập tên người chơi và mật khẩu!");
+        return;
+    }
+
+    fetch(
+        url +
+        "?username=" + encodeURIComponent(username) +
+        "&password=" + encodeURIComponent(password)
+    )
+    .then(response => response.text())
+    .then(result => {
+
+        result = result.trim();
+
+        console.log("Apps Script trả về:", result);
+
+        if (result === "success") {
+
+            // Ẩn phần đăng nhập
+            document.querySelector(".login-box").style.display = "none";
+
+            // Hiện bảng chỉ số
+            document.getElementById("rewardPage").style.display = "flex";
+
+        } 
+        else if (result === "fail") {
+
+            alert("Sai tên đăng nhập hoặc mật khẩu!");
+
+        } 
+        else if (result === "NO_SHEET") {
+
+            alert("Không tìm thấy Sheet1!");
+
+        } 
+        else if (result === "MISSING") {
+
+            alert("Chưa gửi username hoặc password!");
+
+        } 
+        else {
+
+            alert("Lỗi Apps Script: " + result);
+
+        }
+
+    })
+    .catch(error => {
+
+        console.error(error);
+
+        alert("Không kết nối được Google Sheet!");
+
+    });
+}
+
+function closeReward() {
+
+    document.getElementById("rewardPage").style.display = "none";
+
+    document.querySelector(".login-box").style.display = "block";
+}
+/* =========================
+   ĐÓNG BẢNG
+========================= */
+
+function closeReward() {
+
+    document.getElementById("rewardPage").style.display = "none";
+
+    // Hiện lại phần đăng nhập nếu muốn đăng nhập lại
+    document.querySelector(".login-box").style.display = "block";
+
+}
+    </script>
+</body>
+</html>

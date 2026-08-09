@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cách Tính</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .info-frame{
+    width:94%;
+    max-width:1550px;
+    margin:40px auto;
+    padding:45px;
+    height: 400px;
+    min-height: 640px;
+    background-image:url("img/nenthongtin.jpg");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    background-position:center 40px; /* dịch xuống 30px */
+}
+
+.info-content{
+    min-height:700px;
+    padding:20px 40px 50px;
+
+    color:#a1832e;
+    font-family:'Alegreya',serif;
+    font-size:28px;
+    line-height:1.7;
+    margin-top: 20px;
+}
+
+.info-content h2{
+    padding-left: -10px;
+    font-size:33px;
+    font-weight:700;
+    margin-top:40px;      /* khoảng cách phía trên */
+    margin-bottom:35px;
+    text-align: center;
+}
+.info-content ul{
+    font-size: 25px;
+    padding-left:20px;
+    margin-top:-20px;
+    margin-bottom:5px;
+    line-height-step: 1.3S;
+}
+
+.info-content li{
+    margin-bottom:0px;
+}
+.info-content h2 + ul{
+    margin-top:-10px;
+}
+
+.info-content h2:nth-of-type(2){
+    margin-top:-20px;
+}
+.info-frame{
+    position:relative;
+}
+.info-content{
+    padding-top:90px;
+    margin-top:0;
+}
+
+.page-nav{
+    position:absolute;
+    top:50%;
+    left:0;
+    width:100%;
+    transform:translateY(-50%);
+    pointer-events:none;
+}
+
+.page-btn{
+    position:absolute;
+    width:55px;
+    height:55px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(161,131,46,.9);
+    color:#fff;
+
+    font-size:32px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    pointer-events:auto;
+
+    transition:.3s;
+}
+
+#prevPage{
+    left:-25px;
+}
+
+#nextPage{
+    right:-25px;
+}
+
+.page-btn:hover{
+    background:#7d6424;
+    transform:scale(1.08);
+}
+
+.page-btn:disabled{
+    opacity:.35;
+    cursor:default;
+}
+.page1{
+    margin-top: -100px;
+}
+.page2{
+    margin-top: -50px;
+}
+.page4{
+    margin-top: -120px;
+
+}
+.page4 p{
+    text-align: center;
+    margin-top: -30px;
+    font-size: 20px;
+}
+.page4 .level-wrap{
+    display:flex;
+    justify-content:space-between;
+    gap:80px;
+    margin-top:25px;
+}
+
+.page4 .level-wrap ul{
+    flex:1;
+    padding-left:25px;
+}
+
+.page4 .level-wrap li{
+    margin-bottom:12px;
+}
+@media (max-width:768px){
+
+    .info-frame{
+        width:95%;
+        margin:80px auto 20px;
+        padding:20px;
+
+        min-height:600px;   /* tăng chiều dài nền */
+        height:auto;
+
+        background-image:url("img/nenthongtin.jpg");
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        background-position:center top;
+    }
+    .info-frame .page3{
+        min-height: 200px;
+        height: auto;
+        background-image:url("img/nenthongtin.jpg");
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        background-position:center top;
+    }
+
+    .info-content{
+        min-height:auto;
+        padding:40px 18px 30px;
+        margin-top:0;
+        font-size:18px;
+        line-height:1.5;
+    }
+
+    .info-content h2{
+        font-size:24px;
+        margin:0 0 15px;
+        text-align:center;
+    }
+
+    .info-content p{
+        font-size:16px;
+        margin:0 0 15px;
+        text-align:center;
+    }
+
+    .info-content ul{
+        font-size:18px;
+        padding-left:20px;
+        margin:0;
+    }
+
+    .info-content li{
+        margin-bottom:8px;
+    }
+
+    /* reset vị trí các trang */
+    .page1,
+    .page2,
+    .page3,
+    .page4{
+        margin-top:0;
+    }
+
+    /* Page 4: chuyển từ 2 cột thành 1 cột */
+    .page4 .level-wrap{
+        display:block;
+        margin-top:15px;
+    }
+
+    .page4 .level-wrap ul{
+        width:100%;
+        padding-left:20px;
+        margin-bottom:0;
+    }
+
+    /* nút chuyển trang */
+    .page-btn{
+        width:42px;
+        height:42px;
+        font-size:24px;
+    }
+
+    #prevPage{
+        left:-10px;
+    }
+
+    #nextPage{
+        right:-10px;
+    }
+
+    .page-nav{
+        top:55%;
+    }
+
+    .info-content br{
+        display:none;
+    }
+}
+        </style>
+        <body>
+            <div class="banner" style="background-image:url('img/nen.jpg');">
+
+            <!-- Navbar -->
+            <div class="navbar-custom">
+                <!-- bên trái -->
+                <a href="index.html">TRANG CHỦ</a>
+<button class="menu-toggle" type="button">☰ MỤC LỤC</button>
+
+                <!-- bên phải -->
+                <div class="menu-right" id="mobileMenu">
+                    <a href="thoigian.html">THỜI GIAN</a>
+
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                            HẬU CUNG
+                        </a>
+                        <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+                    </div>
+                </div>
+            </div>
+                <div class="info-frame">
+    <div class="info-content" id="infoContent"></div>
+    <div class="page-nav">
+        <button class="page-btn" id="prevPage" onclick="changePage(-1)">
+            ❮
+        </button>
+
+        <span id="pageNumber"></span>
+
+        <button class="page-btn" id="nextPage" onclick="changePage(1)">
+            ❯
+        </button>
+    </div>
+    </div>
+            </div>
+            
+             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+const btn=document.querySelector(".menu-toggle");
+const menu=document.getElementById("mobileMenu");
+if(btn&&menu){btn.addEventListener("click",()=>menu.classList.toggle("show"));}
+// =================== Nội dung các trang ===================
+
+let currentPage = 0;
+
+const pages = [
+
+`
+<div class="page1">
+<h2>TÍNH ĐIỂM THĂNG TIẾN</h2>
+<ul>
+  <li>
+    1 cmt role từ 3 dòng trở lên được tính là hợp lệ, như vậy 1 cmt role hợp lệ sẽ được cộng <b>1 ĐTT</b>.
+  </li>
+  <li>
+    Đăng top thường : <b>+15 ĐTT</b>.
+  </li>
+  <li>
+    Đăng top độc thoại : Đối với top đủ 5 cmt trở lên được: <b>+5 ĐTT</b>, đối với top có cmt 1-4 thì được: <b>+3 ĐTT</b>, còn top không có cmt nào thì chỉ được: <b>+1 ĐTT</b>.
+  </li>
+  <li>
+    Tham gia top người khác ( Đạt điều kiện 5 cmt trở lên trong top ) : <b>+5 ĐTT</b>.
+  </li>
+  <li>
+    Top có tổng cmt vượt qua 35 cmt, mỗi người được: <b>+5 ĐTT</b>.
+  </li>
+  <li>
+    Được Thái hậu/ Hoàng đế khen ngợi: <b>+15 ĐTT</b>.
+  </li>
+  <li>
+    Nếu được ban thưởng trong top role: <b>+ 10 ĐTT</b>.
+  </li>
+  <li>
+    Nếu được ban thưởng ( không phải Thái hậu/ Hoàng đế ) ban thưởng thì sẽ được: <b>+5 ĐTT</b>.
+  </li>
+  <li>
+    Nếu bị Thái hậu/ Hoàng đế khiển trách ( hệ thống xác thực lý do ): <b>-10 ĐTT</b>.
+  </li>
+</ul>
+</div>`,
+
+`<div class="page2">
+<ul>
+  <li>
+    Nếu bị phạm lỗi bị người khác bắt được ( hệ thống xác thực lý do ): <b>-5 ĐTT</b>.
+  </li>
+  <li>
+    Nếu bị phạm lỗi bị người khác bắt được ( hệ thống xác thực lý do ): <b>-5 ĐTT</b>.
+  </li>
+  <li>
+    Nếu được hầu tẩm: <b>+10 ĐTT</b>.
+  </li>
+  <li>
+    Nếu có người hạ sinh sẽ được cộng thêm <b>5 ĐTT</b> nếu là nữ hài và <b>10 ĐTT</b> nếu là nam hài.
+  </li>
+  <li>
+    Tương tác với tam chủ, 1 người được cộng thêm <b>10 ĐTT</b>. Tương tác với NPC, 1 NPC sẽ được cộng thêm <b>5 ĐTT</b>.
+  </li>
+</ul>
+
+<h2>QUY CHẾ BAN THƯỞNG ĐTT</h2>
+
+<ul>
+  <li>
+    <b>Từ 5 - 10 ( cmt ) :</b> Mỗi người nhận thêm <b>3 ĐTT</b>.
+  </li>
+  <li>
+    <b>Từ 11 - 20 ( cmt ) :</b> Mỗi người tham gia ( <b>đủ 3 cmt hợp lệ</b> ) nhận thêm <b>5 ĐTT</b>.
+  </li>
+  <li>
+    <b>Từ 21 - 35 ( cmt ) :</b> Mỗi người tham gia ( <b>đủ 5 cmt hợp lệ</b> ) nhận thêm <b>10 ĐTT</b>, dưới 5 cmt hợp lệ chỉ nhận <b>5 ĐTT</b>.
+  </li>
+</ul>
+</div>`,
+
+`
+<div class="page3">
+<ul>
+  <li>
+    <b>Từ 36 - 50 ( cmt ) :</b> Mỗi người tham gia ( <b>đủ 7 cmt hợp lệ</b> ) nhận được <b>12 ĐTT</b>, dưới 7 cmt hợp lệ chỉ nhận <b>7 ĐTT</b>.
+  </li>
+  <li>
+    <b>Top từ 50 - 79 cmt :</b> Mỗi người tham gia ( <b>đủ 7 cmt hợp lệ</b> ) nhận được <b>15 ĐTT</b>, từ 4- 7 cmt hợp lệ chỉ nhận <b>7 ĐTT</b>, dưới 4 cmt nhận được <b>5 ĐTT</b>.
+  </li>
+  <li>
+    <b>Top từ 80 - 99 cmt :</b> Mỗi người tham gia ( <b>đủ 10 cmt hợp lệ</b> ) nhận được <b>20 ĐTT</b>, từ 5-9 cmt hợp lệ chỉ nhận <b>12 ĐTT</b>, dưới 5 cmt nhận được <b>5 ĐTT</b>.
+  </li>
+  <li>
+    <b>Top từ 100 -154 cmt :</b> Mỗi người tham gia ( <b>đủ 15 cmt hợp lệ</b> ) nhận được <b>30 ĐTT</b>, từ 7-14 cmt hợp lệ chỉ nhận <b>15 ĐTT</b>, dưới 4-7 cmt nhận được <b>10 ĐTT</b>, dưới 4 cmt nhận được <b>5 ĐTT</b>.
+  </li>
+  <li>
+    <b>Các top trên 150 cmt sẽ cộng dồn, lấy điều kiện của top cao nhất.</b> Ví dụ, top đạt 155 cmt sẽ lấy điều kiện của top từ 100 -154 cmt, mỗi người tham gia ( đủ 15 cmt hợp lệ ) được nhận được <b>30 ĐTT + 3 ĐTT</b>, từ 7-14 cmt hợp lệ chỉ nhận <b>15 ĐTT + 3ĐTT</b>, dưới 4-7 cmt nhận được <b>10 ĐTT + 3 ĐTT</b>, dưới 4 cmt nhận được <b>5 ĐTT + 3 ĐTT</b>.
+  </li>
+</ul>
+</div>`,
+
+`
+<div class="page4">
+<h2>QUY CHẾ THĂNG TIẾN</h2>
+<p><i>Sau khi thăng bậc, ĐTT sẽ được làm mới: 0+ ĐTT còn dư khi thăng bậc</i></p>
+
+<div class="level-wrap">
+
+    <ul>
+        <li><b>Quan nữ tử → Chính thất:</b> 50 ĐTT.</li>
+        <li><b>Chính thất → Tòng lục:</b> 100 ĐTT.</li>
+        <li><b>Tòng lục → Chính lục:</b> 200 ĐTT.</li>
+        <li><b>Chính lục → Tòng ngũ:</b> 400 ĐTT.</li>
+        <li><b>Tòng ngũ → Chính ngũ:</b> 800 ĐTT.</li>
+        <li><b>Chính ngũ → Tòng tứ:</b> 1200 ĐTT.</li>
+        <li><b>Tòng tứ → Chính tứ:</b> 1600 ĐTT.</li>
+        <li><b>Chính tứ → Tòng tam:</b> 2500 ĐTT.</li>
+        <li><b>Tòng tam → Chính tam:</b> 3500 ĐTT.</li>
+        
+    </ul>
+
+    <ul>
+        <li><b>Chính tam → Tòng nhị:</b> 5000 ĐTT.</li>
+        <li><b>Tòng nhị → Chính nhị:</b> 7000 ĐTT.</li>
+        <li><b>Chính nhị → Tòng nhất:</b> 9500 ĐTT.</li>
+        <li><b>Tòng nhất → Chính nhất:</b> 12000 ĐTT.</li>
+    </ul>
+
+</div>
+</div>`
+
+];
+
+// =================== Hiển thị ===================
+
+function renderPage(){
+
+    document.getElementById("infoContent").innerHTML = pages[currentPage];
+
+    document.getElementById("pageNumber").innerHTML =
+    (currentPage+1)+" / "+pages.length;
+
+    document.getElementById("prevPage").disabled =
+    currentPage==0;
+
+    document.getElementById("nextPage").disabled =
+    currentPage==pages.length-1;
+}
+
+function changePage(step){
+
+    currentPage += step;
+
+    if(currentPage<0)
+        currentPage=0;
+
+    if(currentPage>=pages.length)
+        currentPage=pages.length-1;
+
+    renderPage();
+}
+
+renderPage();
+
+</script>
+        </body>
+        </html>

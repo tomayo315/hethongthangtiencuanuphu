@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+/*=====================*/
+/* KHU VỰC 2 LÁ CỜ */
+/*=====================*/
+
+.role-container{
+    width:100%;
+    max-width:1400px;
+
+    margin:80px auto 0px;
+    
+    display:flex;
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    padding:0 250px;
+}
+
+/*=====================*/
+/* LÁ CỜ */
+/*=====================*/
+
+.role-card{
+    width:700px;
+    height:660px;
+
+    position:relative;
+    text-align:center;
+    padding-top:55px;
+
+    background:none;
+    transition:.35s;
+}
+.role-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:url("img/khung.png") center -100px no-repeat;
+    background-size:110% 110%;
+
+    opacity:0.9;   /* chỉnh 0.3 - 0.7 tùy ý */
+
+    z-index:0;
+}
+.role-card>*{
+    position:relative;
+    z-index:1;
+}
+
+.role-card:hover{
+
+    transform:translateY(-10px);
+
+}
+
+/*=====================*/
+/* TIÊU ĐỀ */
+/*=====================*/
+
+.role-card h2{
+
+    color:white;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+    margin-top: -40px;
+    text-align: center;
+    text-shadow:0 3px 10px rgba(0,0,0,.35);
+
+}
+
+/*=====================*/
+/* KHUNG ẢNH */
+/*=====================*/
+
+.role-image{
+
+    width:60%;
+
+    height:250px;
+    margin:0 auto 15px;
+
+    border:8px solid #efe6c8;
+
+    overflow:hidden;
+
+    background:white;
+
+    clip-path:polygon(
+        0 12%,
+        10% 0,
+        90% 0,
+        100% 12%,
+        100% 88%,
+        90% 100%,
+        10% 100%,
+        0 88%
+    );
+
+     margin:0 auto 30px;
+}
+
+.role-image img{
+
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    transition:.4s;
+}
+
+.role-card:hover img{
+
+    transform:scale(1.08);
+
+}
+
+/*=====================*/
+/* CHỮ */
+/*=====================*/
+
+.role-card h3{
+
+    font-size:30px;
+
+    color:white;
+
+    font-weight:700;
+
+    margin-bottom:5px;
+    margin-top:-15px;
+
+    text-shadow:0 2px 10px rgba(0,0,0,.3);
+}
+
+.role-card h4{
+
+    font-size:20px;
+
+    color:white;
+
+    font-weight:700;
+
+    margin-bottom:35px;
+}
+/* Lá cờ bên trái */
+.role-card:first-child{
+    position: relative;
+    left: -60px;   /* tăng lên -80px hoặc -100px nếu muốn sang trái hơn */
+}
+
+/* Lá cờ bên phải */
+.role-card:last-child{
+    position: relative;
+    left: 60px;    /* tăng lên 80px hoặc 100px nếu muốn sang phải hơn */
+}
+
+/*=====================*/
+/* BUTTON */
+/*=====================*/
+
+.choose-btn{
+    width:170px;
+    height:50px;
+
+    font-size:28px;
+    font-weight:bold;
+
+    border:none;
+    border-radius:0;
+    margin-top:-15px;
+
+    background:rgba(255,255,255,.45);
+    color:white;
+
+    transition:.3s;
+    cursor:pointer;
+}
+
+.choose-btn:hover{
+    background:#fff;
+    color:#8b6c17;
+}
+
+/*=====================*/
+/* DÂY TREO */
+/*=====================*/
+
+.rope{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-70px;
+
+    transform:translateX(-50%);
+
+    width:36px;
+}
+/* ==========================
+   Animation
+========================== */
+
+.role-card{
+
+    opacity:0;
+
+    transform:translateY(120px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+
+}
+
+.role-card.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+.role-card:nth-child(2){
+
+    transition-delay:.25s;
+
+}
+
+/*=====================*/
+/* RESPONSIVE */
+/*=====================*/
+
+
+
+@media (max-width:768px){
+
+    /* ===== Hai lá cờ ===== */
+
+   .role-container{
+    width:100%;
+    padding:0 10px;
+    margin:-170px auto 20px;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.role-card{
+    width:48%;
+    height: 550px;
+    min-height:420px;
+    padding:20px 10px 40px;
+
+    left:0 !important;
+}
+
+.role-card:first-child,
+.role-card:last-child{
+    left:0 !important;
+}
+
+    .role-card h2{
+    font-size:20px;
+    margin-top:0;
+}
+
+.role-image{
+    width:85%;
+    height:140px;
+    margin-bottom:15px;
+}
+
+.role-card h3{
+    font-size:22px;
+    margin-bottom:-20px;
+    margin-top: 15px;
+}
+
+.role-card h4{
+    font-size:16px;
+    margin-bottom:20px;
+    margin-top: 22px;
+
+}
+
+.choose-btn{
+    width:110px;
+    height:40px;
+    font-size:20px;
+    margin-top: 10px;
+}
+
+.role-card::before{
+    background-size:130% 100%;
+    background-position:center -83px;
+}
+
+    .rope{
+        display:none;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="banner">
+
+    <!-- Navbar -->
+    <div class="navbar-custom">
+
+        <a href="index.html">TRANG CHỦ</a>
+
+        <button class="menu-toggle">
+            ☰ MỤC LỤC
+        </button>
+
+        <div class="menu-right" id="mobileMenu">
+            <a href="thoigian.html">THỜi GIAN</a>
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle"
+                   data-bs-toggle="dropdown">
+                    HẬU CUNG
+                </a>
+
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Hai lá cờ -->
+    <div class="role-container">
+
+        <!-- Tuyến chính -->
+        <div class="role-card">
+
+            <h2>Chọn vai diễn</h2>
+
+            <div class="role-image">
+                <img src="img/chinh1.jpg" alt="">
+            </div>
+
+            <h3>Tuyến chính</h3>
+
+            <h4>Hậu cung</h4>
+
+            <button class="choose-btn"
+                    onclick="location.href='login.html'">
+                Chọn
+            </button>
+        </div>
+
+
+        <!-- Tuyến phụ -->
+        <div class="role-card">
+
+            <h2>Chọn vai diễn</h2>
+
+            <div class="role-image">
+                <img src="img/phu1.jpg" alt="">
+            </div>
+
+            <h3>Tuyến phụ</h3>
+
+            <h4>NPC</h4>
+
+            <button class="choose-btn"
+                    onclick="location.href='login.html'">
+                Chọn
+            </button>
+
+        
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+/* ==========================
+   MENU MOBILE
+========================== */
+
+const btn = document.querySelector(".menu-toggle");
+const menu = document.getElementById("mobileMenu");
+
+if(btn){
+    btn.addEventListener("click", function(){
+        menu.classList.toggle("show");
+    });
+}
+
+/* ==========================
+   HIỆU ỨNG XUẤT HIỆN
+========================== */
+
+const cards = document.querySelectorAll(".role-card");
+
+const observer = new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+},{
+    threshold:0.25
+});
+
+cards.forEach(card=>observer.observe(card));
+
+/* ==========================
+   HOVER NHẸ CHO BUTTON
+========================== */
+
+const buttons=document.querySelectorAll(".choose-btn");
+
+buttons.forEach(btn=>{
+
+    btn.addEventListener("mouseenter",()=>{
+
+        btn.style.boxShadow="0 0 25px rgba(255,255,255,.7)";
+
+    });
+
+    btn.addEventListener("mouseleave",()=>{
+
+        btn.style.boxShadow="none";
+
+    });
+
+});
+</script>
+
+</body>

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+<style>
+        
+
+        .timeline-box{
+            position:relative;
+            width:94%;
+            max-width:1550px;
+            margin:90px auto;
+            background:#f3e3cc;
+            padding:60px;
+            min-height:630px;
+            margin-bottom: 20px;
+        }
+
+.timeline-grid{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:20px;
+}
+
+.row-line{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.line{
+    width:120px;
+    height:1.3px;
+    background:#fff;
+}
+
+.node{
+    width:130px;
+    height:230px;
+    background:#e8cb73;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-size:35px;
+    font-weight:bold;
+    clip-path:polygon(
+        50% 0,
+        100% 22%,
+        100% 78%,
+        50% 100%,
+        0 78%,
+        0 22%
+    );
+    border:1px solid #fff;      /* viền trắng */
+    box-sizing:border-box;
+}
+.info-box{
+    display:none;
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    padding:30px 40px 40px;
+
+    background:#f3e3cc;   /* giống timeline-box */
+    border:none;          /* bỏ viền */
+    box-shadow:none;      /* bỏ bóng nếu có */
+    z-index:10;
+}
+
+.back-btn{
+    position:absolute;
+    top:5px;
+    left:5px;
+
+    width:40px;
+    height:40px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#b9963d;
+    color:#fff;
+
+    font-size:20px;
+    font-weight:bold;
+    line-height:50px;
+    text-align:center;
+
+    cursor:pointer;
+    transition:.25s;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:
+        inset 0 2px 3px rgba(255,255,255,.35),
+        0 3px 6px rgba(0,0,0,.25);
+}
+
+.back-btn:hover{
+    background:#c9a74b;
+    transform:scale(1.08);
+}
+
+.node span{
+    line-height:1.5;
+}
+.year-detail{
+    display:flex;
+    gap:60px;
+}
+
+.year-left{
+    width:120px;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+}
+
+/* Đường trắng chạy xuyên suốt */
+.year-left::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+
+    top:-999px;
+    bottom:-999px;
+
+    width:3px;
+    background:#fff;
+    z-index:1;
+}
+.info-box{
+    overflow:hidden;
+}
+
+
+.rank-detail{
+    color:#8f7424;
+    font-size:24px;
+    line-height:1.3;
+}
+
+.rank-detail h3{
+    color:#8f7424;
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:18px;
+    margin-left: 20px;
+}
+
+.rank-detail ul{
+    margin-left:0px;
+    margin-bottom:15px;
+}
+
+.rank-detail li{
+    margin-bottom:15px;
+}
+
+.rank-detail b{
+    color:#7b631d;
+}
+.page-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:50%;
+    background:#b9963d;
+    color:#fff;
+    font-size:28px;
+    cursor:pointer;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:20;
+}
+
+.page-nav:hover{
+    background:#c9a74b;
+}
+
+#prevPage{
+    left:15px;
+}
+
+#nextPage{
+    right:15px;
+}
+@media (max-width:768px){
+    .timeline-box{
+    width:96%;
+    margin:35px auto 15px;
+    padding:15px;
+    min-height:auto;
+}
+.timeline-box.show-info{
+    width:100%;
+    min-height:650px;
+    margin:75px 0 0;
+    padding:15px;
+}
+.info-box{
+    position:absolute;
+    top:0px;
+    left:0;
+
+    width:100%;
+    min-height:650px;
+
+    padding:100px 20px 30px;
+
+    overflow-y:auto;
+}
+
+.timeline-grid{
+    gap:8px;
+    margin-top:0;
+}
+
+.row-line{
+    gap:0;
+    overflow-x:auto;
+    justify-content:flex-start;
+    padding:5px 0;
+    overflow-x:hidden;
+}
+
+.node{
+    width:75px;
+    height:130px;
+    font-size:20px;
+    flex-shrink:0;
+    outline: none;
+}
+
+.node span{
+    line-height:1.3;
+}
+
+.line{
+    width:25px;
+    flex-shrink:0;
+}
+
+.info-box{
+        padding:55px 25px 30px;
+    }
+
+    .rank-detail{
+        font-size:20px;
+        line-height:1.8;
+    }
+
+    .rank-detail h3{
+        font-size:28px;
+        margin-bottom:18px;
+    }
+
+    .rank-detail li{
+        margin-bottom:18px;
+    }
+
+.page-nav{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+    width:36px;
+    height:36px;
+    font-size:20px;
+    z-index:100;
+}
+
+#prevPage{
+    left:5px;
+}
+
+#nextPage{
+    right:5px;
+}
+
+.back-btn{
+    position:fixed;
+    top:165px;
+    left:6px;
+    width:34px;
+    height:34px;
+    font-size:18px;
+    z-index:100;
+}
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="banner">
+
+    <!-- Navbar -->
+    <div class="navbar-custom">
+
+    <!-- bên trái -->
+    <a href="index.html">TRANG CHỦ</a>
+    <button class="menu-toggle" type="button">
+    ☰ MỤC LỤC
+</button>
+
+    <!-- bên phải -->
+    <div class="menu-right " id="mobileMenu">
+
+        <a href="thoigian.html">THỜI GIAN</a>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HẬU CUNG
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    </div>
+
+    <div class="timeline-box">
+
+        <div class="timeline-grid" id="timeline">
+
+    <!-- Hàng 1 -->
+    <div class="row-line">
+
+        <div class="node" onclick="showInfo(1)">
+            <span>XƯNG<br>HÔ</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="node" onclick="showInfo(2)">
+            <span>HÀNH<br>LỄ</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="node" onclick="showInfo(3)">
+            <span>QUYỀN<br>HÀNH</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="node" onclick="showInfo(4)">
+            <span>HÀI<br>TỬ</span>
+        </div>
+
+    </div>
+
+    <!-- Hàng 2 -->
+    <div class="row-line">
+
+        <div class="node" onclick="showInfo(5)">
+            <span>DIỆN<br>KIẾN</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="node" onclick="showInfo(6)">
+            <span>HẦU<br>TẨM</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="node" onclick="showInfo(7)">
+            <span>PHỤC<br>SỨC</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="node" onclick="showInfo(8)">
+            <span>HẠ<br>NHÂN</span>
+        </div>
+
+    </div>
+    </div>
+    <div id="infoBox" class="info-box">
+
+    <button class="back-btn" onclick="showTimeline()">
+        &#8592;
+    </button>
+    <button id="prevPage" class="page-nav" onclick="changePage(-1)">
+    &#10094;
+    </button>
+
+    <button id="nextPage" class="page-nav" onclick="changePage(1)">
+    &#10095;
+    </button>
+
+    <h2 id="infoTitle"></h2>
+
+    <div id="infoContent"></div>
+
+</div>
+</div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let currentCase = 0;
+    let currentPage = 1;
+    let case7Page = 1;
+    function showInfo(year){
+
+    currentCase = year;
+
+        if(year != 7){
+            currentPage = 1;
+        }else{
+            case7Page = 1;
+        }
+    document.querySelector(".timeline-box").classList.add("show-info");
+    document.getElementById("timeline").style.display="none";
+    document.getElementById("infoBox").style.display="block";
+
+    renderPage();
+}
+
+function renderPage(){
+
+    let title = "";
+    let content = "";
+
+    document.getElementById("prevPage").style.display = "none";
+    document.getElementById("nextPage").style.display = "none";
+
+    switch(currentCase){
+
+
+        case 1:
+    content = `
+        <div class="rank-detail">
+
+            <h3>HOÀNG HẬU:</h3>
+            <ul>
+                <li>Gọi Thái hậu là <b>hoàng ngạch nương</b>, tự xưng <b>nhi thần</b>.</li>
+                <li>Gọi Hoàng đế là <b>hoàng thượng, bệ hạ</b>, tự xưng <b>thần thiếp</b>.</li>
+                <li>Được người dưới tôn gọi là <b>Hoàng hậu nương nương</b>.</li>
+            </ul>
+
+            <h3>PHI TẦN:</h3>
+            <ul>
+                <li>Gọi Thái hậu <b>Thái hậu nương nương</b>, tự xưng <b>thần thiếp</b>.</li>
+                <li>Gọi Hoàng đế là <b>hoàng thượng, bệ hạ</b>, tự xưng <b>thần thiếp</b>.</li>
+                <li>Tự xưng <b>tần thiếp</b> với phi tần trên phẩm, Cố Luân Vinh Ý Nghi Tuệ Công chúa.</li>
+                <li>Đối với phi tần từ Chính tứ phẩm trở lên, được người dưới tôn gọi là <b>[Hào/họ] + chức vị + nương nương</b>, tự xưng <b>bổn cung</b>.</li>
+                <li>Đối với phi tần từ Tòng tứ phẩm trở xuống, được người dưới tôn gọi là <b>[Hào/họ] + chức vị</b>, tự xưng <b>ta</b>.</li>
+            </ul>
+
+        </div>
+    `;
+    break;
+        
+
+        case 2:
+if(currentPage==1){
+    document.getElementById("nextPage").style.display="flex";
+        content = `
+        <div class="rank-detail">
+
+            <h3>HOÀNG HẬU:</h3>
+
+            <ul>
+                <li>Hành <b>tùy thân lễ</b> đối với Thái hậu, Hoàng đế.</li>
+            </ul>
+
+            <br>
+
+            <h3>PHI TẦN:</h3>
+
+            <ul>
+                <li>Hành <b>tùy thân lễ</b> đối với tam chủ hậu cung.</li>
+                <li>Hành <b>phù tấn lễ - không quỳ</b> đối với phi tần trên phẩm, Cố Luân Vinh Ý Nghi Tuệ Công chúa khi ở ngoài trời, trong cung điện phải hành <b>vạn phúc lễ</b>.</li>
+                <li>Hành <b>phù tấn lễ - quỳ</b> khi thỉnh an Hoàng hậu, Thái hậu. Tân phi lần đầu diện kiến Hoàng hậu, Thái hậu cũng dùng lễ này - <b>lặp lại 3 lần</b>.</li>
+                <li>Phi tần sau khi được tấn phong sẽ hành <b>phù tấn lễ - quỳ ( lặp lại 3 lần )</b> đối với Hoàng hậu.</li>
+                <li>Phi tần khi diện kiến cung chủ sẽ dâng trà cho cung chủ, sau đó hành <b>vạn phúc lễ</b>.</li>
+                <li>Nếu như phi tần muốn thể hiện sự thân thiết với nhau có thể hành <b>lạp thủ lễ</b>.</li>
+            </ul>
+
+        </div>
+        `;
+
+}else{
+    document.getElementById("prevPage").style.display="flex";
+
+        content = `
+        <div class="rank-detail">
+
+            <ul>
+                <li>Phi tần cùng phẩm thì phi tần dưới giai hành <b>phù tấn lễ - không quỳ</b> đối với phi tần trên giai, phi tần trên giai chỉ cần gật đầu chào lại.</li>
+                <li>Phi tần cùng giai cùng phẩm, hoặc phi tần cùng phẩm ( khi phẩm đó không phân giai ) thì gật đầu chào hỏi nhau, hoặc có thể dùng <b>lạp thủ lễ</b> nếu cả hai thân thiết.</li>
+                <li>Hành lễ <b>tam quỳ cửu khẩu</b> trong đại lễ tuyên chỉ sách phong.</li>
+                <li>Hành lễ <b>nhất quỳ nhất khẩu</b> khi nhận chỉ dụ từ Hoàng đế.</li>
+            </ul>
+
+        </div>
+        `;
+}    break;
+
+        case 3:
+           if(currentPage==1){
+    document.getElementById("nextPage").style.display="flex";
+        content = `
+        <div class="rank-detail">
+
+            <h3>HOÀNG HẬU:</h3>
+
+            <ul>
+                <li>Thân phận <b>Chủ nội trị</b>, sở hữu <b>sách, bảo cùng phượng ấn</b> chế tác từ vàng thuần, chủ trì mọi việc trong hậu cung.</li>
+                <li>Hoàng hậu có thể <b>treo thẻ</b> ( không quá ba tháng ), phạt quỳ, cấm túc.</li>
+                <li>Khi di chuyển sử dụng <b>Nghi giá</b>.</li>
+                <li>Hoàng hậu ngụ tại <b>Khôn Ninh cung</b>.</li>
+            </ul>
+
+            <br>
+
+            <h3>PHI TẦN:</h3>
+
+            <ul>
+                <li>Từ Chính tứ phẩm trở lên có thân phận <b>Tá nội trị</b>. Chính nhất phẩm sở hữu <b>sách, bảo, ấn</b> chế tác từ vàng thuần. Tòng nhị phẩm đến Tòng nhất phẩm sở hữu <b>sách, ấn</b> chế tác từ vàng bạc pha. Chính tứ đến Chính tam phẩm sở hữu <b>sách</b> chế tác từ bạc.</li>
+                <li>Chính tứ phẩm trở lên có thể <b>phạt quỳ phi tần dưới phẩm, phạt cấm túc với phi tần dưới phẩm trong cung ngụ của mình</b>, tất cả hình phạt đều phải trình báo lên Hoàng hậu.</li>
+            </ul>
+
+        </div>
+        `;
+
+}else{
+    document.getElementById("prevPage").style.display="flex";
+
+        content = `
+        <div class="rank-detail">
+
+            <ul>
+                <li>Chính nhị phẩm đến chính nhất phẩm sử dụng <b>Nghi trượng</b>. Tòng tam phẩm đến Tòng nhị phẩm sử dụng <b>Thải trượng</b>. Tòng tứ phẩm đến Chính tứ phẩm sử dụng <b>Mộc trượng</b>, dưới Tòng tứ phẩm cước bộ.</li>
+                <li>Chính tứ phẩm ngụ tại <b>chính điện, làm chủ một cung</b>. Tòng tứ phẩm trở xuống ngụ tại <b>điện phụ, các, đường, hiên</b>.</li>
+            </ul>
+
+        </div>
+        `;
+}
+        break;
+        case 4:
+            content = `
+        <div class="rank-detail">
+
+            <h3>HOÀNG HẬU:</h3>
+
+            <ul>
+                <li>Được nuôi dưỡng hoàng tự <b>trực tiếp.</b></li>
+                <li>Khi hoàng tự tới tuổi trưởng thành và thành hôn, hoàng nam được phong <b>Quận vương</b>, hoàng nữ được phong <b>Cố Luân Công chúa.</b></li>
+            </ul>
+
+            <br>
+
+            <h3>PHI TẦN:</h3>
+
+            <ul>
+                <li>Phi tần từ <b>Tòng tam phẩm</b> được nuôi dưỡng <b>trực tiếp</b>, phi tần <b>dưới Tòng tam phẩm</b> được nuôi dưỡng đến khi <b>hoàng tự 1 tuổi</b> sẽ phải đem đến Cảnh Phúc cung.</li>
+                <li>Khi hoàng tự tới tuổi trưởng thành và thành hôn, hoàng nam được phong <b>Bối tử</b>, hoàng nữ được phong <b>Hòa Thạc Công chúa.</b></li>
+            </ul>
+
+        </div>
+        `;
+        break;
+        case 5:
+            content = `
+        <div class="rank-detail">
+
+            <ul>
+                <li>Phi tần từ <b>Tòng tam phẩm trở lên</b> được <b>tự ý diện kiến tam chủ.</b></li>
+                <li>Phi tần từ <b>Chính ngũ phẩm đến Chính tứ phẩm</b> được <b>tự ý diện kiến Hoàng hậu, Thái hậu</b> nhưng <b>không được tự ý diện kiến Hoàng đế.</b></li>
+                <li>Phi tần <b>dưới Chính ngũ phẩm</b> không được <b>tự ý diện kiến tam chủ</b>, nếu muốn diện kiến thì phải <b>nhờ cung chủ</b> dẫn đến.</li>
+            </ul>
+
+        </div>
+        `;
+        break;
+        case 6:
+            content = `
+        <div class="rank-detail">
+
+            <ul>
+                <li>Phi tần <b>lần đầu hầu tẩm</b> sẽ được <b>quấn chăn</b> đưa tới Dưỡng Tâm điện.</li>
+                <li>Phi tần từ <b>Tòng tứ phẩm trở xuống</b> hầu tẩm sẽ được ngồi kiệu <b>Thừa Ân Phụng Liễn</b> đưa đến Dưỡng Tâm điện.</li>
+                <li>Phi tần từ <b>Chính tứ phẩm trở lên</b> sẽ được <b>Hoàng đế ngự giá</b> đến cung ngụ của mình.</li>
+                <li>Phi tần sẽ có <b>tỉ lệ đậu thai là 5:5</b> nếu được lưu tẩm.</li>
+                <li>Phi tần <b>sảy thai 1 lần</b> thì tỉ lệ đậu thai sẽ là <b>4 ( đậu ) : 5 ( không đậu )</b>, <b>sảy thai 2 lần</b> thì tỉ lệ đậu thai sẽ là <b>3 ( đậu ) : 7 ( không đậu )</b>, <b>sảy thai 3 lần</b> thì tỉ lệ đậu thai sẽ là <b>2 ( đậu ) : 8 ( không đậu )</b>, <b>sảy thai 4 lần</b> thì <b>không còn khả năng đậu thai.</b></li>
+                <li>Phi tần <b>sinh hài tử qua 2 lần</b> thì <b>giảm tỉ lệ đậu xuống 1 đơn vị, tăng tỉ lệ không đậu 1 đơn vị</b> cho đến khi khả năng không đậu đạt 10.</li>
+            </ul>
+
+        </div>
+        `;
+        break;
+        case 7:
+if(currentPage==1){
+    document.getElementById("nextPage").style.display="flex";
+        content = `
+        <div class="rank-detail">
+
+            <h3>HOÀNG HẬU:</h3>
+
+            <ul>
+                <li>Không có giới hạn phục sức.</li>
+            </ul>
+
+            <br>
+
+            <h3>PHI TẦN:</h3>
+
+            <ul>
+                <li>Phi tần từ <b>Chính nhị phẩm đến Chính nhất phẩm</b> được mặc đồ liên quan tới hoàng sắc và hồng sắc ( trừ màu minh hoàng sắc và chính hồng sắc ). Trang sức không giới hạn chất liệu.</li>
+                <li>Phi tần từ <b>Tòng tam phẩm đến Tòng nhị phẩm</b> không được mặc đồ liên quan tới hoàng sắc, được mặc đồ liên quan tới hồng sắc ( trừ chính hồng sắc ). Trang sức không giới hạn chất liệu.</li>
+                <li>Phi tần <b>Chính ngũ phẩm tới Chính tứ phẩm</b> không được mặc đồ liên quan tới hoàng sắc, hồng ( đỏ ) sắc, đồ tử sắc chỉ được chọn những gam màu nhẹ nhàng. Trang sức vàng pha, không được dùng vàng thuần, mã não.</li>
+                <li>Phi tần <b>dưới Chính ngũ phẩm</b> không được mặc đồ liên quan tới hoàng sắc, hồng sắc, tử sắc. Trang sức không được dùng vàng thuần, mã não, phỉ thúy.</li>
+            </ul>
+
+        </div>
+        `;
+
+}else{
+    document.getElementById("prevPage").style.display="flex";
+
+content = `
+        <div class="rank-detail">
+
+            <h3>HOÀNG HẬU:</h3>
+
+            <ul>
+                <li>Không có giới hạn họa tiết phục sức.</li>
+            </ul>
+
+            <br>
+
+            <h3>PHI TẦN:</h3>
+
+            <ul>
+                <li>Phi tần từ <b>Tòng tam phẩm đến Chính nhất phẩm</b> không được mặc đồ có họa tiết phượng hoàng, mẫu đơn.</li>
+                <li>Phi tần <b>Chính ngũ phẩm tới Chính tứ phẩm</b> không được có họa tiết phượng hoàng, mẫu đơn, hải đường, thược dược, tịnh đế liên.</li>
+                <li>Phi tần <b>dưới Chính ngũ phẩm</b> không được mặc đồ có họa tiết phượng hoàng, chim hạc, mẫu đơn, hải đường, thược dược, hoa sen.</li>
+            </ul>
+
+        </div>
+        `;
+       
+
+} break;
+case 8:
+    content = `
+        <div class="rank-detail">
+
+            <h3>HOÀNG HẬU:</h3>
+            <ul>
+                <li>20 cung nữ, 15 thái giám.</li>
+            </ul>
+
+            <h3>PHI TẦN:</h3>
+            <ul>
+                <li><b>Nhất phẩm:</b> 15 cung nữ, 10 thái giám.</li>
+                <li><b>Nhị phẩm:</b> 12 cung nữ, 8 thái giám.</li>
+                <li><b>Tam phẩm:</b> 8 cung nữ, 6 thái giám.</li>
+                <li><b>Tứ phẩm:</b> 6 cung nữ, 6 thái giám.</li>
+                <li><b>Ngũ phẩm:</b> 4 cung nữ, 4 thái giám.</li>
+                <li><b>Lục phẩm:</b> 2 cung nữ, 2 thái giám.</li>
+                <li><b>Thất phẩm:</b> 1 cung nữ, 1 thái giám</li>
+            </ul>
+
+        </div>
+    `;
+    break;
+}
+
+
+
+    document.getElementById("infoTitle").innerHTML=title;
+    document.getElementById("infoContent").innerHTML=content;
+
+}
+function changePage(step){
+
+    currentPage += step;
+
+    if(currentPage<1) currentPage=1;
+    if(currentPage>2) currentPage=2;
+
+    renderPage();
+}
+
+function showTimeline(){
+
+    document.querySelector(".timeline-box").classList.remove("show-info");
+    document.getElementById("timeline").style.display="flex";
+    document.getElementById("infoBox").style.display="none";
+
+}
+function nextCase7(){
+
+    currentPage = 2;
+    renderPage();
+
+}
+
+function prevCase7(){
+
+    currentPage = 1;
+    renderPage();
+
+}
+
+</script>
+<script>
+const btn=document.querySelector(".menu-toggle");
+const menu=document.getElementById("mobileMenu");
+if(btn&&menu){btn.addEventListener("click",()=>menu.classList.toggle("show"));}
+</script>
+</body>
+</html> 

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+<style>
+        
+        .timeline-box{
+            position:relative;
+            width:94%;
+            max-width:1550px;
+            margin:110px auto 20px;
+            background:#f3e3cc;
+            padding:60px;
+            min-height:630px;
+        }
+
+.timeline{
+    display:flex;
+    align-items:center;
+}
+
+.line{
+    width:120px;
+    height:1.3px;
+    background:#fff;
+}
+
+.node{
+    width:100px;
+    height:230px;
+    background:#e8cb73;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    clip-path:polygon(
+        50% 0,
+        100% 22%,
+        100% 78%,
+        50% 100%,
+        0 78%,
+        0 22%
+    );
+    border:1px solid #fff;      /* viền trắng */
+    box-sizing:border-box;
+}
+.info-box{
+    display:none;
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    padding:70px 40px 40px;
+
+    background:#f3e3cc;   /* giống timeline-box */
+    border:none;          /* bỏ viền */
+    box-shadow:none;      /* bỏ bóng nếu có */
+    z-index:10;
+}
+
+.back-btn{
+    position:absolute;
+    top:5px;
+    left:5px;
+
+    width:40px;
+    height:40px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#b9963d;
+    color:#fff;
+
+    font-size:30px;
+    font-weight:bold;
+    line-height:50px;
+    text-align:center;
+
+    cursor:pointer;
+    transition:.25s;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:
+        inset 0 2px 3px rgba(255,255,255,.35),
+        0 3px 6px rgba(0,0,0,.25);
+}
+
+.back-btn:hover{
+    background:#c9a74b;
+    transform:scale(1.08);
+}
+
+.node span{
+    line-height:1.5;
+}
+.year-detail{
+    display:flex;
+    gap:60px;
+}
+
+.year-left{
+    width:120px;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+}
+
+/* Đường trắng chạy xuyên suốt */
+.year-left::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+
+    top:-999px;
+    bottom:-999px;
+
+    width:3px;
+    background:#fff;
+    z-index:1;
+}
+.info-box{
+    overflow:hidden;
+}
+
+.year-node{
+    width:90px;
+    height:190px;
+
+    background:#e8cb73;
+    color:#fff;
+
+    font-size:18px;
+    font-weight:bold;
+    line-height:1.55;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    clip-path:polygon(
+        50% 0,
+        100% 20%,
+        100% 80%,
+        50% 100%,
+        0 80%,
+        0 20%
+    );
+
+    position:relative;
+    z-index:2;
+
+    border:1px solid #fff;
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+
+/* Không dùng nữa */
+.year-line{
+    display:none;
+}
+
+.year-right{
+    flex:1;
+    color:#9d8331;
+    font-size:25px;
+    line-height:1.725;
+}
+
+.year-right p{
+    margin-bottom:45px;
+}
+
+.year-right b{
+    color:#8f7424;
+    font-weight:800;
+}
+
+
+/* Mobile */
+/* ================= MOBILE ================= */
+@media (max-width:768px){
+
+    
+
+    /* ===== Timeline ===== */
+
+    .timeline-box{
+    width:94%;
+    margin:130px auto 40px;
+    padding:15px 15px;
+    min-height:calc(100vh - 100px);
+}
+    .timeline{
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    align-items:center;
+    overflow-x:auto;
+    overflow-y:hidden;
+    gap:0;
+    padding:10px 5px;
+    -webkit-overflow-scrolling:touch;
+}
+
+.timeline::-webkit-scrollbar{
+    height:5px;
+}
+
+.line{
+    width:45px;
+    height:2px;
+    flex-shrink:0;
+}
+
+    .node{
+        width:82px;
+        height:170px;
+        font-size:18px;
+    }
+
+    /* ===== Trang chi tiết ===== */
+
+    .info-box{
+        position:relative;
+        padding:45px 15px 20px;
+        height:auto;
+        overflow-y:auto;
+    }
+
+    .year-detail{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .year-left{
+        width:100%;
+        justify-content:center;
+    }
+
+    .year-left::before{
+        display:none;
+    }
+
+    .year-node{
+        width:80px;
+        height:160px;
+        font-size:16px;
+        margin:auto;
+    }
+
+    .year-right{
+        width:100%;
+        font-size:18px;
+        line-height:1.6;
+    }
+
+    .year-right p{
+        margin-bottom:22px;
+        text-align:justify;
+    }
+
+    .back-btn{
+        width:34px;
+        height:34px;
+        font-size:22px;
+    }
+
+}
+</style>
+</head>
+<body>
+
+<div class="banner">
+
+    <!-- Navbar -->
+    <div class="navbar-custom">
+
+    <!-- bên trái -->
+    <a href="index.html">TRANG CHỦ</a>
+    <button class="menu-toggle" type="button">
+    ☰ MỤC LỤC
+</button>
+
+    <!-- bên phải -->
+    <div class="menu-right " id="mobileMenu">
+
+        <a href="thoigian.html">THỜI GIAN</a>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HẬU CUNG
+            </a>
+
+           <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    </div>
+
+    <div class="timeline-box">
+
+        <div class="timeline" id="timeline">
+
+            <div class="node active" onclick="showInfo(1)">
+                <span>NĂM<br>KHÂM<br>NGUYÊN<br>NGUYÊN<br>NIÊN</span>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="node" onclick="showInfo(2)">
+                <span>NĂM<br>KHÂM<br>NGUYÊN<br>THỨ<br>2</span>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="node" onclick="showInfo(3)">
+                <span>NĂM<br>KHÂM<br>NGUYÊN<br>THỨ<br>?</span>
+            </div>
+
+        </div>
+
+    
+    <div id="infoBox" class="info-box">
+
+        <button class="back-btn" onclick="showTimeline()">
+            &#8592;
+        </button>
+
+        <h2 id="infoTitle"></h2>
+
+        <div id="infoContent"></div>
+
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showInfo(year){
+
+    document.getElementById("timeline").style.display="none";
+    document.getElementById("infoBox").style.display="block";
+
+    let title="";
+    let content="";
+
+    switch(year){
+
+        case 1:
+        content = `
+        <div class="year-detail">
+
+            <div class="year-left">
+
+                <div class="year-node">
+                    NĂM<br>
+                    KHÂM<br>
+                    NGUYÊN<br>
+                    NGUYÊN<br>
+                    NIÊN
+                </div>
+
+                <div class="year-line"></div>
+
+            </div>
+
+            <div class="year-right">
+
+                <p><b>Ngày 3 tháng 4,</b> Ngạch Nhĩ Đắc xưng đế, đặt họ Ái Tân Giác La làm họ hoàng tộc, đổi niên hiệu là Khâm Nguyên. Cùng ngày, Khâm Nguyên đế ra chỉ tôn Vân Trát thị làm Hoàng thái hậu, dâng tôn hiệu là Khang Dụ. Lập Thế tử phi Qua Nhĩ Giai thị làm Hoàng hậu.</p>
+
+                <p><b>Ngày 23 tháng 4,</b> Khâm Nguyên đế ra chỉ dụ truy phong Thế tử trắc phi Hách Xá Lý thị là Trinh Thuận Hoàng quý phi, tấn Thế tử trắc phi Ngạc Mục Xước thị là Kỳ Tiểu phi, Thế tử thiếp thất Tô Mục Sát thị là Khiêm Ý tần.</p>
+
+                <p><b>Ngày 5 tháng 6,</b> Triều Tiên Lý thị nhập cung, được chỉ định làm Quý nhân, hào Đôn.</p>
+
+                <p><b>Ngày 20 tháng 12,</b> Khâm Nguyên đưa ra lệnh tuyển tú.</p>
+
+            </div>
+
+        </div>
+        `;
+        break;
+
+        case 2:
+            content = `
+        <div class="year-detail">
+
+            <div class="year-left">
+
+                <div class="year-node">
+                    NĂM<br>
+                    KHÂM<br>
+                    NGUYÊN<br>
+                    THỨ<br>
+                    2
+                </div>
+
+                <div class="year-line"></div>
+
+            </div>
+
+            <div class="year-right">
+
+                <p><b>Ngày 5 tháng 2,</b> Khoa Nhĩ Thấm bộ Bát Nhĩ Tề Cát Đặc thị nhập cung, được chỉ định làm Dung hoa, hào Hi.</p>
+
+                <p><b>Ngày 10 tháng 2,</b> Ô Lạp Na Lạp thị, Mã Giai thị, Cáp Tát Lạp thị, Sa Nhạc Đặc thị thông qua Bát Kỳ tuyển tú mà nhập cung. Ô Lạp Na Lạp thị được sơ phong xx, Mã Giai thị được sơ phong xx, Cáp Tát Lạp thị được sơ phong xx, Sa Nhạc Đặc thị được sơ phong xx.</p>
+
+                <p><b>Ngày 12 tháng 2,</b> Thư Mục Lộc thị, Khoa Kỳ Lý thị, Tha Tha Lạp thị, Ngô Trát Khố thị, Triệu Giai thị thông qua Bát Kỳ tuyển tú mà nhập cung. Thư Mục Lộc thị được sơ phong xx, Khoa Kỳ Lý thị được sơ phong xx, Tha Tha Lạp thị được sơ phong xx, Ngô Trát Khố thị được sơ phong xx, Triệu Giai thị được sơ phong xx.</p>
+
+            </div>
+
+        </div>
+        `;
+        break;
+
+        case 3:
+           content = `
+        <div class="year-detail">
+
+            <div class="year-left">
+
+                <div class="year-node">
+                    NĂM<br>
+                    KHÂM<br>
+                    NGUYÊN<br>
+                    THỨ<br>
+                    2
+                </div>
+
+                <div class="year-line"></div>
+
+            </div>
+
+            <div class="year-right">
+
+                <p><b>Đang cập nhật...</b></p>
+
+
+
+            </div>
+
+        </div>
+        `;
+        break;
+    }
+    
+
+    document.getElementById("infoTitle").innerHTML=title;
+    document.getElementById("infoContent").innerHTML=content;
+
+}
+
+function showTimeline(){
+
+    document.getElementById("timeline").style.display="flex";
+    document.getElementById("infoBox").style.display="none";
+
+}
+</script>
+<script>
+const menuBtn = document.querySelector(".menu-toggle");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", function () {
+    mobileMenu.classList.toggle("show");
+});
+</script>
+</body>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .character-info{
+    width:94%;
+    max-width:1550px;
+    margin:90px auto 40px;
+    display:flex;
+    justify-content:center;
+}
+
+.character-info img{
+    width:600px;
+    height:auto;
+    display:block;
+    border-radius:12px;
+}
+.login-form{
+    width:600px;
+    margin:40px auto;
+    position:relative;      /* Quan trọng */
+}
+
+.login-form img{
+    width:600px ;
+    display:block;
+    border-radius:12px;
+}
+
+.character-info{
+    margin:90px auto 40px;   /* cách navbar */
+}
+.login-box{
+    position:absolute;
+    top:60px;
+    left:40px;
+    right:40px;
+}
+
+.login-box h2{
+    font-size:30px;
+    color:#9d8331;
+    font-weight:700;
+    margin-bottom:35px;
+}
+
+.input-row{
+    display:flex;
+    align-items:center;
+    margin-bottom:20px;
+    margin-top:0px;
+}
+
+.input-row label{
+    width:240px;
+    font-size:22px;
+    font-weight:bold;
+    color:#9d8331;
+}
+
+.input-row input{
+    flex:1;
+    height:52px;
+    border:none;
+    border-radius:30px;
+    background:#ffffff;
+    padding:0 20px;
+    font-size:22px;
+    outline:none;
+    box-shadow:0 0 8px rgba(0,0,0,.12);
+}
+
+.login-btn{
+    display:block;
+    margin:20px auto 0;
+    padding:10px 45px;
+    border:none;
+    border-radius:30px;
+    background:#9d8331;
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+}
+.reward-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.35);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    border-radius:12px;
+    z-index:100;
+}
+
+.reward-box{
+    position:relative;
+    background:#fffcf3;
+    padding:20px;
+    border-radius:16px;
+}
+
+.reward-box img{
+    width:300px;
+    max-width:100%;
+    display:block;
+    border-radius:10px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    background: #c7c977;
+    color: #8c9b19;
+    font-size: 28px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 35px;
+    text-align: center;
+    padding: 0;
+}
+
+.close-btn:hover {
+    background: #ddd;
+}
+.reward-image{
+    position:relative;
+    width:520px;
+    margin:auto;
+}
+
+.reward-image img{
+    width:100%;
+    display:block;
+}
+
+.text{
+    position:absolute;
+    width:180px;
+    text-align:center;
+    font-family:'Alegreya', serif;
+    font-size:18px;
+    color:#9d8331;
+    font-weight:500;
+    line-height:1.2;
+}
+
+/* Trên trái */
+.text1{
+    top:120px;
+    left:10px;
+}
+
+/* Trên phải */
+.text2{
+    top:120px;
+    right:10px;
+}
+
+/* Giữa trái */
+.text3{
+    top:355px;
+    left:10px;
+}
+
+/* Giữa phải */
+.text4{
+    top:355px;
+    right:20px;
+}
+
+/* Dưới */
+.text5{
+    top:575px;
+    left:55%;
+    transform:translateX(-50%);
+}
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+    /* Khung thông tin */
+    .character-info {
+        width: 96%;
+        margin: 30px auto 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    /* Ảnh nền bảng */
+    .character-info > img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 10px;
+    }
+
+    /* Bảng đăng nhập */
+    .login-form {
+        width: 94%;
+        max-width: 600px;
+        margin: 20px auto;
+        position: relative;
+    }
+
+    .login-form > img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 10px;
+    }
+
+    /* Phần chữ + ô nhập */
+    .login-box {
+        position: absolute;
+        top: 8%;
+        left: 5%;
+        right: 5%;
+    }
+
+    .login-box h2 {
+        font-size: 22px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Từng dòng */
+    .input-row {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin-bottom: 10px;
+        margin-top: -8px;
+    }
+
+    .input-row label {
+        width: 100%;
+        font-size: 15px;
+        margin-bottom: 6px;
+        text-align: left;
+    }
+
+    .input-row input {
+        width: 57%;
+        height: 38px;
+        font-size: 14px;
+        padding: 0 12px;
+        margin: -25px 140px 20px;
+        box-sizing: border-box;
+        border-radius: 20px;
+
+    }
+
+    /* Nút đăng nhập */
+    .login-btn {
+        display: block;
+        margin: 15px auto 0;
+        padding: 7px 25px;
+        font-size: 16px;
+        border-radius: 25px;
+    }
+
+    /* ================= BẢNG PHẦN THƯỞNG ================= */
+
+    .reward-overlay {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+    .reward-box {
+        width: 92%;
+        max-width: 400px;
+        padding: 10px;
+        border-radius: 14px;
+        box-sizing: border-box;
+    }
+
+    .reward-image {
+        position: relative;
+        width: 100%;
+        margin: auto;
+    }
+
+    .reward-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Chữ trên ảnh phần thưởng */
+    .text {
+        width: 32%;
+        font-size: 10px;
+        line-height: 1.15;
+    }
+
+    .text1 {
+        top: 17%;
+        left: 2%;
+    }
+
+    .text2 {
+        top: 17%;
+        right: 2%;
+    }
+
+    .text3 {
+        top: 51%;
+        left: 2%;
+    }
+
+    .text4 {
+        top: 51%;
+        right: 2%;
+    }
+
+    .text5 {
+        top: 83%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* Nút X */
+    .close-btn {
+        top: 5px;
+        right: 5px;
+        width: 30px;
+        height: 30px;
+        font-size: 22px;
+        line-height: 30px;
+    }
+}
+</style>
+</head>
+<body>
+    <div class="navbar-custom">
+
+    <!-- bên trái -->
+    <a href="index.html">TRANG CHỦ</a>
+    <button class="menu-toggle" type="button">
+    ☰ MỤC LỤC
+</button>
+
+    <!-- bên phải -->
+    <div class="menu-right " id="mobileMenu">
+
+        <a href="thoigian.html">THỜI GIAN</a>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HẬU CUNG
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+    </div>
+    <div class="character-info">
+    <img src="img/infohd.jpg" alt="Thông tin hoàng đế">
+</div>
+<div class="login-form">
+    <img src="img/nendangnhap.jpg" alt="">
+    <div class="login-box">
+        <h2>Vật ban thưởng cho tuyến chính</h2>
+
+        <div class="input-row">
+            <label>Tên người chơi:</label>
+            <input type="text" id="username" placeholder="Tên người chơi">
+        </div>
+
+        <div class="input-row">
+            <label>Mật khẩu người chơi:</label>
+            <input type="password" id="password" placeholder="Mật khẩu">
+        </div>
+
+        <button class="login-btn" onclick="login()">Đăng nhập</button>
+    </div>
+    <div id="rewardPage" class="reward-overlay">
+
+    <div class="reward-box">
+        <div class="reward-image">
+
+        <button class="close-btn" onclick="closeReward()">x</button>
+
+
+    <img src="img/phanthuong.jpg" alt="">
+
+    <div class="text text1">
+        Xấp gấm/lụa thượng phẩm (10)
+    </div>
+
+    <div class="text text2">
+        Xấp gấm/lụa trung phẩm (10)
+    </div>
+
+    <div class="text text3">
+        Xấp gấm/lụa thường phẩm (10)
+    </div>
+
+    <div class="text text4">
+        Trang sức chung (10)
+    </div>
+
+    <div class="text text5">
+        Những thứ khác (10)
+    </div>
+
+</div>
+
+    </div>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const btn = document.querySelector(".menu-toggle");
+const menu = document.getElementById("mobileMenu");
+
+btn.addEventListener("click", function () {
+    menu.classList.toggle("show");
+});
+
+</script>
+<script>
+    const url = "https://script.google.com/macros/s/AKfycbykiuy-If0vCZ00G_-ICWQzCwUWozN0Rm355EpyNr2cY_RpUc3Pc4OcKsJlkRCNbEyiMw/exec";
+
+function login() {
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if(username === "" || password === ""){
+        alert("Vui lòng nhập tên người chơi và mật khẩu!");
+        return;
+    }
+
+    fetch(
+        url +
+        "?username=" + encodeURIComponent(username) +
+        "&password=" + encodeURIComponent(password)
+    )
+    .then(response => response.text())
+    .then(result => {
+
+        if(result.trim() === "success"){
+
+            document.getElementById("rewardPage").style.display = "flex";
+
+        }else{
+
+            alert("Sai tên người chơi hoặc mật khẩu!");
+
+        }
+
+    })
+    .catch(error=>{
+        console.log(error);
+        alert("Không kết nối được Apps Script!");
+    });
+
+
+}
+function closeReward(){
+    document.getElementById("rewardPage").style.display = "none";
+}
+    </script>
+</body>
+</html>

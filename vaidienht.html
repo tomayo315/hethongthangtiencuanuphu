@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .info-frame{
+    position: relative;
+    width:94%;
+    max-width:1550px;
+    margin:40px auto;
+    padding:45px 10px;
+    min-height: 650px;
+    height: 650px;
+    background-image:url("img/nenthongtin.jpg");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    background-position:center 50px; /* dịch xuống 30px */
+}
+.pham-grid{
+    position: relative;
+    margin-top: 20px;
+}
+
+.pham-row{
+    display:flex;
+    justify-content:flex-start;
+    align-items:flex-start;
+    gap:0;              /* hoặc 5px nếu muốn có khe nhỏ */
+    padding-left:20px;
+    margin-bottom:60px;
+}
+.pham-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-right:20px;   /* kéo các ảnh lại gần nhau */
+}
+
+.pham-item img{
+    width:250px;
+    height:auto;
+    display:block;
+}
+.pham-item .pham-btn{
+    margin-top:-80px;
+    border:none;
+    background:#b5953f;
+    color:white;
+    padding:8px 30px;
+    border-radius:30px;
+    font-size:17px;
+    font-family:"Alegreya",serif;
+    cursor:pointer;
+}
+.pham-item .pham-btncc{
+    margin-top:-80px;
+    border:none;
+    background:#75746f;
+    color:white;
+    padding:8px 30px;
+    border-radius:30px;
+    font-size:17px;
+    font-family:"Alegreya",serif;
+    cursor:pointer;
+}
+
+.pham-item button{
+    margin-top:-100px;
+    border:none;
+    background:#b5953f;
+    color:white;
+    padding:8px 30px;
+    border-radius:30px;
+    font-size:17px;
+    font-family:"Alegreya",serif;
+    cursor:pointer;
+}
+
+.pham-item button:hover{
+    background:#585651;
+}
+.pham-btn{
+    min-width: 140px;      /* nhỏ hơn */
+    padding: 6px 18px;
+    font-size: 18px;
+    border-radius: 25px;
+}
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9998;
+}
+.character-info{
+    display:none;
+    width:94%;
+    max-width:1550px;
+    margin:30px auto;
+}
+
+.info-img{
+    width:100%;
+    display:block;
+    margin-bottom:25px;
+}
+/* ================= MOBILE ================= */
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+    .info-frame {
+        width: 96%;
+        min-height: 600px;
+        height: auto;
+        margin: 20px auto;
+        padding: 30px 5px 50px;
+        box-sizing: border-box;
+
+        background-size: 100% 100%;
+        background-position: center top;
+    }
+
+    .pham-grid {
+        width: 100%;
+        margin-top: 20px;
+
+        /* Dịch toàn bộ bảng sang trái */
+        transform: translateX(-25px);
+    }
+
+    /* ================= 2 TRÊN - 1 DƯỚI ================= */
+
+    .pham-row {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+
+        width: 100%;
+        padding: 0;
+        margin: 0;
+
+        /* giảm khoảng cách */
+        column-gap: 0;
+        row-gap: 20px;
+
+        justify-items: center;
+        align-items: start;
+    }
+
+    .pham-item {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin: 0;
+        padding: 0;
+
+        box-sizing: border-box;
+    }
+
+    /* ================= ẢNH ================= */
+
+    .pham-item img {
+        width: 220px;
+        max-width: 220px;
+        height: auto;
+
+        display: block;
+
+        margin: 0 auto;
+    }
+
+    /* ================= ẢNH THỨ 3 NẰM GIỮA ================= */
+
+    .pham-item:nth-child(3) {
+        grid-column: 1 / 3;
+        justify-self: center;
+
+        width: 50%;
+    }
+
+    /* ================= NÚT ================= */
+
+    .pham-item .pham-btn,
+    .pham-item .pham-btncc,
+    .pham-item button {
+
+        width: 110px;
+        min-height: 38px;
+
+        margin-top: -70px;
+
+        padding: 5px 5px;
+
+        border: none;
+        border-radius: 20px;
+
+        font-family: "Alegreya", serif;
+        font-size: 12px;
+        line-height: 1.2;
+
+        box-sizing: border-box;
+    }
+
+    .pham-item .pham-btn {
+        background: #b5953f;
+    }
+
+    .pham-item .pham-btncc {
+        background: #75746f;
+    }
+
+    /* ================= THÔNG TIN ================= */
+
+    .character-info {
+        width: 96%;
+        margin: 20px auto;
+    }
+
+    .info-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin-bottom: 15px;
+    }
+}
+    </style>
+    </head>
+<body>
+    <div class="banner" style="background-image:url('img/nen.jpg');">
+    <div class="navbar-custom">
+
+    <!-- bên trái -->
+    <a href="index.html">TRANG CHỦ</a>
+    <button class="menu-toggle" type="button">
+    ☰ MỤC LỤC
+</button>
+
+    <!-- bên phải -->
+    <div class="menu-right " id="mobileMenu">
+
+        <a href="thoigian.html">THỜI GIAN</a>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HẬU CUNG
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+    </div>
+    <div class="info-frame">
+        <div class="pham-grid">
+            <div class="pham-row">
+        <div class="pham-item">
+            <img src="img/hoangde.jpg" alt="">
+            <button class="pham-btn" onclick="window.location.href='hoangde.html'"><b> HOÀNG ĐẾ</b></button>
+        </div>
+
+        <div class="pham-item">
+            <img src="img/congchua.jpg" alt="">
+            <button class="pham-btn" onclick="window.location.href='congchua.html'">
+    <b>CỐ LUÂN VINH Ý <br> NGHI TUỆ CÔNG CHÚA</b>
+</button>
+        </div>
+
+        <div class="pham-item">
+            <img src="img/thanvuong.jpg" alt="">
+            <button class="pham-btncc" onclick="window.location.href='thanvuong.html'"><b>HÒA THẠC DUỆ <br> THÂN VƯƠNG</b></button>
+        </div>
+            </div>
+        </div>
+        <div id="congChuaInfo" class="character-info">
+
+    <!-- Hình 1 -->
+    <img src="img/infocc.jpg" class="info-img" alt="">
+
+    <!-- Hình 2 -->
+    <img src="img/dangnhap.png" class="info-img" alt="">
+
+</div>
+    </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const btn = document.querySelector(".menu-toggle");
+const menu = document.getElementById("mobileMenu");
+
+btn.addEventListener("click", function () {
+    menu.classList.toggle("show");
+});
+
+</script>
+</body>
+</html>

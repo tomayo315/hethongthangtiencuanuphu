@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sơ Đồ Tương Tác Tử Cấm Thành (Chữ Thuần)</title>
+    
+    <!-- Google Fonts: Alegreya -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        
+
+        h1 {
+            color: #f1c40f;
+            margin-bottom: 5px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        p.subtitle {
+            color: #dcdde1;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        /* Container sơ đồ */
+        .map-container {
+            position: relative;
+            display: block;
+            margin: 0 auto;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fdfcf0; /* Màu nền giấy cổ */
+            margin-top: 100px;
+            margin-bottom: 20px;
+        }
+
+        .map-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        /* Navbar */
+
+@media(max-width:768px){
+    .map-container{
+        margin-top:80px;
+    }
+}
+
+        /* TÊN CUNG ĐIỆN DẠNG CHỮ THUẦN (Gia cố loại bỏ gạch dưới) */
+        .palace-label {
+            position: absolute;
+            transform: translate(-50%, 0); 
+            
+            /* LOẠI BỎ ĐỊNH DẠNG NÚT */
+            background: none !important;
+            border: none !important;
+            padding: 0;
+            box-shadow: none !important;
+            
+            /* ĐỊNH DẠNG CHỮ */
+            color: #816a30;
+            font-size: 11.2px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            user-select: none;
+            text-align: center;
+            
+            /* BỎ HOÀN TOÀN GẠCH CHÂN */
+            border-bottom: none !important;
+            text-decoration: none !important;
+        }
+
+        /* HIỆU ỨNG KHI DI CHUỘT VÀO CHỮ */
+        .palace-label:hover {
+            transform: translate(-50%, -1px) scale(1.1); /* Phóng lớn nhẹ */
+            border-bottom: none !important; /* Không gạch chân */
+            text-decoration: none !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Tạo bóng đổ cho chữ nổi bật */
+            z-index: 10;
+        }
+
+        /* Pop-up Modal (Giữ nguyên) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: #fdfdf1;
+            color: #fdfdf1;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            border-top: 6px solid #fdfdf1;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            background: none;
+            border: none;
+            color: #7f8c8d;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .close-btn:hover {
+            color: #a02010;
+        }
+
+        .modal-title {
+            color: #a02010;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 8px;
+        }
+
+        .modal-body {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #34495e;
+        }
+        .outer-label{
+    position:absolute;
+    transform:translate(-50%,0);
+    color:#816a30;
+    text-align:center;
+    white-space:nowrap;
+    pointer-events:none;   /* Không thể bấm */
+    user-select:none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.info-title{
+    background:#8b6d28;
+    color:#fff;
+    font-size:32px;
+    font-weight:700;
+    padding:12px 18px;
+    margin-bottom:15px;
+}
+
+#modalContent .info-desc{
+    font-style: italic;
+    color:#7d6b45;
+    font-family:'Alegreya', serif;
+    font-size:15px;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+#modalContent p:not(.info-desc){
+    font-size:20px;
+    color:#7b6528;
+    margin:20px 0;
+}
+
+
+#modalContent b{
+    font-weight:700;
+}
+.highlight-text{
+    font-weight: 700;
+    font-size: 22px;
+}
+.label{
+    font-weight: 500;      /* Có thể đổi thành 400 nếu muốn nhạt hơn */
+    color: #7d6b45;
+}
+
+        /* ===========================
+           Responsive cho điện thoại
+        =========================== */
+        @media screen and (max-width: 768px) {
+
+           body{
+    padding:0;
+    margin:0;
+    overflow-x:hidden;
+}
+
+h1{
+    margin-top:15px;
+}
+
+.subtitle{
+    margin-bottom:15px;
+}
+
+.map-container{
+    width:100vw;
+    max-width:none;
+    margin-left:calc(50% - 50vw);
+    margin-right:calc(50% - 50vw);
+    border-radius:0;
+    box-shadow:none;
+}
+
+.map-image{
+    width:100%;
+    height:auto;
+    display:block;
+}
+
+            /* GIỮ KIỂU NÚT BẤM BẠN ĐÃ TẠO NHƯNG TỐI ƯU CỠ CHỮ + PADDING CHO MOBILE */
+            .palace-label{
+    position:absolute;
+    transform:translate(-50%,0);
+
+    /* Giống hệt laptop */
+    background:none !important;
+    border:none !important;
+    box-shadow:none !important;
+    padding:0 !important;
+    font-weight:700;
+    color:#816a30 !important;
+    font-size:5px !important;
+    font-weight:700;
+    line-height:1.05;
+    white-space:nowrap;
+    text-align:center;
+    cursor:pointer;
+    user-select:none;
+
+    text-decoration:none !important;
+    border-bottom:none !important;
+}
+
+            .palace-label:hover {
+                color: #f1c40f !important;
+                transform: translate(-50%, -1px) scale(1.05);
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+                border-color: #ffeaa7 !important;
+                text-decoration: none !important;
+                border-bottom: none !important;
+                z-index: 10;
+            }
+
+            /* ===== Giữ nguyên toàn bộ tọa độ nút bấm cho Mobile ===== */
+
+            
+
+            .palace-label[onclick*="Thái Hòa môn"]{
+                top:74.7%!important;
+                left:50%!important;
+            }
+
+            .palace-label[onclick*="Thái Hòa điện"]{
+                top:63.2%!important;
+                left:50%!important;
+            }
+
+            .palace-label[onclick*="Trung Hòa điện"]{
+                top:55.7%!important;
+                left:50%!important;
+            }
+
+            .palace-label[onclick*="Điện Bảo Hòa"]{
+                top:48.8%!important;
+                left:50%!important;
+            }
+
+            .palace-label[onclick*="Càn Thanh cung"]{
+                top:32.8%!important;
+                left:50%!important;
+            }
+
+            .palace-label[onclick*="Khôn Ninh cung"]{
+                top:25.8%!important;
+                left:50%!important;
+            }
+
+            .palace-label[onclick*="Ngự Hoa viên"]{
+                top:15.8%!important;
+                left:50%!important;
+            }
+
+            .palace-label[onclick*="Dưỡng Tâm điện"]{
+                top:41.3%!important;
+                left:26.5%!important;
+            }
+
+            .palace-label[onclick*="Từ Ninh cung"]{
+                top:53.8%!important;
+                left:20%!important;
+            }
+
+            .palace-label[onclick*="Võ Anh điện"]{
+                top:72.2%!important;
+                left:23.5%!important;
+            }
+
+            .palace-label[onclick*="Phụng Tiên điện"]{
+                top:41.3%!important;
+                left:74.5%!important;
+            }
+
+            .palace-label[onclick*="Văn Hòa điện"]{
+                top:75.8%!important;
+                left:76.5%!important;
+            }
+
+            .palace-label[onclick*="Hàm Phúc cung"]{
+                top:16.3%!important;
+                left:19.5%!important;
+            }
+
+            .palace-label[onclick*="Trường Xuân cung"]{
+                top:16.3%!important;
+                left:27%!important;
+            }
+
+            .palace-label[onclick*="Trữ Tú cung"]{
+                top:16.3%!important;
+                left:33.5%!important;
+            }
+
+            .palace-label[onclick*="Hàm Dương cung"]{
+                top:16.3%!important;
+                left:65.7%!important;
+            }
+
+            .palace-label[onclick*="Chung Túy cung"]{
+                top:16.3%!important;
+                left:73.5%!important;
+            }
+
+            .palace-label[onclick*="Cảnh Dương cung"]{
+                top:16.3%!important;
+                left:80.5%!important;
+            }
+
+            .modal-card{
+                width:95%;
+                max-width:380px;
+                padding:16px;
+                border-radius:10px;
+            }
+            #modalContent .info-desc{
+                font-size:13px;
+                line-height:1.6;
+                margin-bottom:16px;
+            }
+
+            #modalContent p:not(.info-desc){
+                font-size:15px;
+                line-height:1.55;
+                margin:10px 0;
+            }
+            .label{
+                font-size:15px;
+                font-weight:500;
+            }
+
+            .highlight-text{
+                font-size:16px;
+                font-weight:700;
+                word-break:break-word;
+            }
+
+            .close-btn{
+                font-size:24px;
+                top:8px;
+                right:12px;
+            }
+
+            .modal-title{
+                font-size:20px;
+            }
+
+            .modal-body{
+                font-size:15px;
+            }
+            /* Thu nhỏ các chữ không phải nút bấm */
+            .outer-label{
+                font-size: 50% !important;
+                line-height: 1.1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-custom">
+
+    <a href="index.html">TRANG CHỦ</a>
+
+    <button class="menu-toggle" type="button">
+        ☰ MỤC LỤC
+    </button>
+
+    <div class="menu-right" id="mobileMenu">
+
+        <a href="thoigian.html">THỜI GIAN</a>
+
+        <div class="dropdown">
+            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                HẬU CUNG
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+    <div class="map-container">
+        <!-- Ảnh nền sơ đồ -->
+        <img src="img/sodo.jpg" alt="Sơ đồ Tử Cấm Thành" class="map-image">
+
+        <!-- CÁC NHÃN CHỮ ĐẶT NGAY DƯỚI HÌNH CÁC CUNG ĐIỆN -->
+
+        <!-- TRỤC TRUNG TÂM -->
+        <div class="outer-label" style="top: 87%; left: 50%;font-size: 14px;" >Ngọ môn</div>
+        <div class="outer-label" style="top: 73%; left: 49.8%;font-size: 11px;">Thái Hòa<br> môn</div>
+        <div class="palace-label" style="top: 63%; left: 49.7%;font-size: 12px;" onclick="showInfo('Thái Hòa điện')">Thái Hòa <br>điện</div>
+        <div class="palace-label" style="top: 53.7%; left: 49.7%;font-size: 12px;" onclick="showInfo('Trung Hòa điện')">Trung Hòa <br>điện</div>
+        <div class="palace-label" style="top: 47%; left: 49.7%;font-size: 12px;" onclick="showInfo('Bảo Hòa điện')">Bảo Hòa<br> điện</div>
+        <div class="palace-label" style="top: 32%; left: 50%;" onclick="showInfo('Càn Thanh cung')">Càn Thanh<br> cung</div>
+        <div class="palace-label" style="top: 24.3%; left: 50%;" onclick="showInfo('Khôn Ninh cung')">Khôn Ninh <br>cung</div>
+        <div class="palace-label" style="top: 16.3%; left: 50%;" onclick="showInfo('Ngự Hoa viên')">Ngự Hoa viên</div>
+        <div class="palace-label" style="top: 13.5%; left: 50%;" onclick="showInfo('Khâm An điện')">Khâm An điện</div>
+
+        <!-- PHÍA TÂY (BÊN TRÁI) -->
+        <div class="palace-label" style="top: 37.5%; left: 13%;" onclick="showInfo('Anh Hoa điện')">Anh Hoa<br> điện</div>
+        <div class="palace-label" style="top: 42%; left: 13%;" onclick="showInfo('Trường An cung')">Trường An<br> cung</div>
+        <div class="palace-label" style="top: 39.8%; left: 26.6%;" onclick="showInfo('Dưỡng Tâm điện')">Dưỡng Tâm<br> điện</div>
+        <div class="palace-label" style="top: 48.6%; left: 19%;font-size: 10px;" onclick="showInfo('Đại Phật đường')">Đại Phật đường</div>
+        <div class="palace-label" style="top: 52.4%; left: 19%;font-size: 14px;" onclick="showInfo('Từ Ninh cung')">Từ Ninh<br> cung</div>
+        <div class="palace-label" style="top: 72%; left: 23.5%;font-size: 14px;" onclick="showInfo('Võ Anh điện')">Võ Anh<br> điện</div>
+        <div class="palace-label" style="top: 40.5%; left: 38.9%;" onclick="showInfo('Nam Thư phòng')">Nam Thư<br>phòng</div>
+        <div class="outer-label" style="top: 50.5%; left: 26.8%; font-size: 11px; border: 1px solid #9ace82; border-radius: 4px; padding: 2px 6px; font-weight: 700; line-height: 1.15; text-align: center; display: inline-block;">
+        Từ<br>Ninh<br>Hoa<br>viên</div>
+        <div class="palace-label" style="top: 79%; left: 13%;font-size: 12px;" onclick="showInfo('Thận Hình ty')">Thận Hình<br>ty</div>
+        <div class="palace-label" style="top: 79%; left: 23%;font-size: 12px;" onclick="showInfo('Ngưng Đạo điện')">Ngưng Đạo<br>điện</div>
+        <div class="outer-label" style="top: 84%; left: 11.6%;font-size: 12px;" >Tây Hoa<br>môn</div>
+        <div class="palace-label" style="top: 85.4%; left: 22.5%;font-size: 12px;" onclick="showInfo('Đăng Lung khố')">Đăng Lung khố</div>
+        <div class="outer-label" style="top: 81%; left: 50%;font-size: 12px;" >Kim Thủy<br>kiều</div>
+
+        <div class="palace-label" style="top: 58.4%; left: 19%;font-size: 14px;" onclick="showInfo('Nội Vụ phủ')">Nội Vụ phủ</div>
+        <div class="palace-label" style="top: 64%; left: 13.8%;font-size: 12px;" onclick="showInfo('Bảo Uẩn lâu')">Bảo Uẩn <br>lâu</div>
+        <div class="palace-label" style="top: 64%; left: 23.8%;font-size: 12px;" onclick="showInfo('Dục Đức đường')">Dục Đức <br>đường</div>
+        <div class="outer-label" style="top: 58.6%; left: 39%;font-size: 12px;">Trung <br>Hữu <br>môn</div>
+        <div class="outer-label" style="top: 66%; left: 36.5%;font-size: 12px;">Hữu <br>Dực <br>môn</div>
+        <div class="outer-label" style="top: 58.6%; left: 60%;font-size: 12px;">Trung <br>Tả <br>môn</div>
+        <div class="outer-label" style="top: 66%; left: 62.8%;font-size: 12px;">Tả <br>Dực <br>môn</div>
+        <div class="outer-label" style="top: 77.5%; left: 38%;font-size: 12px;">Đoạn <br>Hồng <br>kiều</div>
+        <div class="outer-label" style="top: 78%; left: 60.8%;font-size: 12px;">Hiệp Hòa <br>môn</div>
+        
+
+        <!-- PHÍA ĐÔNG (BÊN PHẢI) -->
+        <div class="palace-label" style="top: 39.8%; left: 72.8%;" onclick="showInfo('Phụng Tiên điện')">Phụng Tiên<br> điện</div>
+        <div class="palace-label" style="top: 73.6%; left: 74%;font-size: 13px" onclick="showInfo('Văn Hoa điện')">Văn Hoa<br>điện</div>
+        <div class="palace-label" style="top: 39.5%; left: 60.5%;" onclick="showInfo('Thượng Thư phòng')">Thượng <br> Thư<br>phòng</div>
+        <div class="palace-label" style="top: 37.3%; left: 86.4%;font-size: 11.9px" onclick="showInfo('Thọ Trung điện')">Thọ Trung<br>điện</div>
+        <div class="palace-label" style="top: 42.3%; left: 86.4%;font-size: 11.9px" onclick="showInfo('Sưởng Âm các')">Sưởng Âm<br>các</div>
+        <div class="palace-label" style="top: 47.3%; left: 86.4%;font-size: 11.9px;" onclick="showInfo('Dưỡng Kỳ các')">Dưỡng Kỳ<br>các</div>
+        <div class="palace-label" style="top: 52.3%; left: 86.4%;font-size: 11.9px;" onclick="showInfo('Sưởng Thư các')">Sưởng Thư<br>các</div>
+        <div class="palace-label" style="top: 46.7%; left: 75.7%;font-size: 11.9px;" onclick="showInfo('Hoàng Cực điện')">Hoàng Cực<br>điện</div>
+        <div class="palace-label" style="top: 52%; left: 75.7%;font-size: 11.9px;" onclick="showInfo('Nam Tam đường')">Nam Tam<br>đường</div>
+        <div class="palace-label" style="top: 59.5%; left: 73.2%;font-size: 11.9px;" onclick="showInfo('Ngự Thiện phòng')">Ngự Thiện<br>phòng</div>
+        <div class="palace-label" style="top: 59.5%; left: 81%;font-size: 11.9px;" onclick="showInfo('Thái Y viện')">Thái Y<br>viện</div>
+        <div class="palace-label" style="top: 65.1%; left: 72.8%;font-size: 11.9px;" onclick="showInfo('Ngự Trà phòng')">Ngự Trà<br>phòng</div>
+        <div class="palace-label" style="top: 65.1%; left: 79.1%;font-size: 11.9px;" onclick="showInfo('Ngự Dược phòng')">Ngự Dược<br>phòng</div>
+        <div class="palace-label" style="top: 65.1%; left: 85.5%;font-size: 11.9px;" onclick="showInfo('Ngự Y phòng')">Ngự Y<br>phòng</div>
+        <div class="palace-label" style="top: 85.4%; left: 71%;font-size: 11.9px;" onclick="showInfo('Nội Các đại đường')">Nội Các đại đường</div>
+        <div class="palace-label" style="top: 85.4%; left: 80%;font-size: 11.9px;" onclick="showInfo('Thất Lực khố')">Thất Lực<br>khố</div>
+        <div class="outer-label" style="top: 83%; left: 88.5%;font-size: 13px;">Đông <br> Hoa<br>môn</div>
+
+
+        <!-- HẬU CUNG TÂY -->
+        <div class="palace-label" style="top: 16%; left: 19.5%;" onclick="showInfo('Hàm Phúc cung')">Hàm Phúc<br> cung</div>
+        <div class="palace-label" style="top: 16%; left: 26.8%;" onclick="showInfo('Trường Xuân cung')">Trường Xuân<br> cung</div>
+        <div class="palace-label" style="top: 16%; left: 33.9%;" onclick="showInfo('Trữ Tú cung')">Trữ Tú <br>cung</div>
+        <div class="outer-label" style="top: 17.5%; left: 12%; font-size:13px;" >Thành <br>Hoàng <br>miếu</div>
+        <div class="palace-label" style="top: 22.8%; left: 22%;" onclick="showInfo('Kiến Phúc cung')">Kiến Phúc<br>cung</div>
+        <div class="palace-label" style="top: 22.8%; left: 32.5%;" onclick="showInfo('Dực Khôn cung')">Dực Khôn<br>cung</div>
+        <div class="palace-label" style="top: 30%; left: 19%;" onclick="showInfo('Dục Đức cung')">Dục Đức<br>cung</div>
+        <div class="palace-label" style="top: 30%; left: 26.5%;" onclick="showInfo('Khải Tường cung')">Khải Tường<br>cung</div>
+        <div class="palace-label" style="top: 30%; left: 33.6%;" onclick="showInfo('Vĩnh Thọ cung')">Vĩnh Thọ<br>cung</div>
+        <div class="outer-label" style="top: 21%; left: 40.5%;font-size: 13px;" >Hi <br> đài</div>
+        <div class="outer-label" style="top: 29%; left: 40.5%;font-size: 13px;" >Long<br>Phúc<br>môn</div>
+
+        <!-- HẬU CUNG ĐÔNG -->
+        <div class="palace-label" style="top: 16%; left: 65.7%;" onclick="showInfo('Hàm Dương cung')">Hàm Dương<br> cung</div>
+        <div class="palace-label" style="top: 16%; left: 73%;" onclick="showInfo('Chung Túy cung')">Chung Túy <br>cung</div>
+        <div class="palace-label" style="top: 16%; left: 80.5%;" onclick="showInfo('Cảnh Dương cung')">Cảnh Dương <br>cung</div>
+        <div class="palace-label" style="top: 15.6%; left: 88%;" onclick="showInfo('Cảnh Phúc cung')">Cảnh Phúc<br> cung</div>
+        <div class="palace-label" style="top: 23%; left: 67%;" onclick="showInfo('Thừa Càn cung')">Thừa Càn<br> cung</div>
+        <div class="palace-label" style="top: 23%; left: 78%;" onclick="showInfo('Vĩnh Hòa cung')">Vĩnh Hòa<br> cung</div>
+        <div class="palace-label" style="top: 30%; left: 65.7%;" onclick="showInfo('Cảnh Nhân cung')">Cảnh<br>Nhân<br>cung</div>
+        <div class="palace-label" style="top: 30%; left: 72.7%;" onclick="showInfo('Diên Hi cung')">Diên Hi<br> cung</div>
+        <div class="palace-label" style="top: 30%; left: 79.7%;" onclick="showInfo('Toàn Phúc cung')">Toàn Phúc<br> cung</div>
+        <div class="palace-label" style="top: 21.3%; left: 88%;" onclick="showInfo('Kính Sự phòng')">Kính Sự<br> phòng</div>
+        <div class="palace-label" style="top: 27%; left: 88%;" onclick="showInfo('Thọ Dược phòng')">Thọ Dược<br> phòng</div>
+        <div class="palace-label" style="top: 33%; left: 88%;" onclick="showInfo('Tứ Chấp khố')">Tứ Chấp<br> khố</div>
+        <div class="palace-label" style="top: 20.5%; left: 59.2%;font-size: 13px;"onclick="showInfo('Giáng Tuyết hiên')" >Giáng<br>Tuyết<br>hiên</div>
+        <div class="outer-label" style="top: 29%; left: 59.5%;font-size: 13px;" >Cảnh <br>Hòa <br>môn</div>
+        <!-- Vòng ngoài -->
+        <div class="outer-label" style="top: 0%; left: 50%; font-size:25px;" >Bắc</div>
+        <div class="outer-label" style="top: 3.5%; left: 8%; font-size:17px;" >Giác lâu</div>
+        <div class="outer-label" style="top: 3.5%; left: 26%; font-size:17px;">Đông Tử hà</div>
+        <div class="outer-label" style="top: 3.5%; left: 50%; font-size:17px;" >Thần Vũ môn</div>
+        <div class="outer-label" style="top: 3.5%; left: 76%; font-size:17px;" >Đông Tử hà</div>
+        <div class="outer-label" style="top: 3.5%; left: 92%; font-size:17px;" >Giác lâu</div>
+        <div class="outer-label" style="top: 8.7%; left: 72%; font-size:13px;" >Tây Trường phòng</div>
+        <div class="outer-label" style="top: 8.7%; left: 27%; font-size:13px;" >Đông Trường phòng</div>
+        <div class="outer-label" style="top: 10%; left: 50%; font-size:13px;" >Thuận Trinh môn</div>
+        <div class="outer-label" style="top: 50%; left: 2%;font-size: 27px;" >T<br>Â<br>Y</div>
+        <div class="outer-label" style="top: 48%; left: 98%;font-size: 27px;" >Đ<br>Ô<br>N<br>G</div>
+        <div class="outer-label" style="top: 94%; left: 8%; font-size:17px;" >Giác lâu</div>
+        <div class="outer-label" style="top: 94%; left: 92%; font-size:17px;" >Giác lâu</div>
+        <div class="outer-label" style="top: 94%; left: 76%; font-size:17px;" >Đông Tử hà</div>
+        <div class="outer-label" style="top: 94%; left: 26%; font-size:17px;" >Đông Tử hà</div>
+        <div class="outer-label" style="top: 96%; left: 50%; font-size:25px;" >Nam</div>
+        <div class="outer-label" style="top: 96.7%; left: 43%;font-size: 10px;" >Huyệt<br>Hữu<br>môn</div>
+        <div class="outer-label" style="top: 96.7%; left: 57%;font-size: 10px;" >Huyệt<br>Tả<br>môn</div>
+
+
+
+    </div>
+
+    <!-- Popup Thông tin -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-card">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title" id="modalTitle">Tên Cung Điện</h2>
+            <div class="modal-body" id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Cơ sở dữ liệu
+        const palaceData = {
+     "Hàm Phúc cung": `
+    <div class="info-title">
+        Tây lục cung - 
+        <span class="highlight-text">《chủ vị  -  trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích trung bình, trong khuôn viên còn có hồ cá nhỏ,
+        phía đông nam ở hậu điện còn có một cái giếng nhỏ.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Dực điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Dực điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Hồng Ngự các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ngũ Tử các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Nghiêu Vân đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tử Kinh hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ỷ Lệ hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Trường Xuân cung": `
+    <div class="info-title">
+        Tây lục cung -
+        <span class="highlight-text">《chủ vị - Kỳ Tiểu phi》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích lớn, trong khuôn viên còn có trồng các chậu cúc đại đóa được tiến cống.
+        Trước tiền điện của chính điện có tượng rùa, hạc bằng đồng mỗi thứ một đôi.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《Kỳ Tiểu phi》</span></p>
+    <p><span class="label">Đông Ngân điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Hạnh điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Y Tuyết các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tư Thủy các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ngọc Sanh đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Lăng Duyệt hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tĩnh Dương hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Dực Khôn cung": `
+    <div class="info-title">
+        Tây lục cung -
+        <span class="highlight-text">《chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích trung bình, trong khuôn viên còn có trồng hoa sen.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Nguyên điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Phúc điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Chỉ Tinh các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Phương Quang các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Y Lan đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Lệ Cảnh hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Kết Ỷ hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Trữ Tú cung":`
+    <div class="info-title">
+        Tây lục cung -
+        <span class="highlight-text">《chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích lớn nhất và xa hoa nhất phía Tây lục cung, trong khuôn viên còn có trồng các chậu hoa hải đường. Tiền chính điện đặt các hạc đồng và lư đồng.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Hồng điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Hòa điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Bình Khang các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Hoa Mục các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Túy Vân đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Giáng Tuyết hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Cẩm Nhạn hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Vĩnh Thọ cung":`
+    <div class="info-title">
+        Tây lục cung -
+        <span class="highlight-text">《chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích lớn và gần Dưỡng Tâm điện nhất, trong khuôn viên còn có gốc hoa lê.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Nhã điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Hương điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ngưng Tuệ các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ngẫu Hương các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ngũ Oanh đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Thính Vũ hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Thụy Trường hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Kiến Phúc cung":`
+    <div class="info-title">
+        Tây lục cung -
+        <span class="highlight-text">《chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích lớn, trong khuôn viên còn có trồng các chậu hoa thược dược được tiến cống.
+        Trước tiền điện của chính điện có tượng rùa, hạc bằng đồng mỗi thứ một đôi.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Sương điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Nguyệt điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Hàm Mộng các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Lân Chỉ các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tố Nhã đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tịch Thanh hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Lạc Diệp hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Dục Đức cung":`
+    <div class="info-title">
+    Tây lục cung -
+        <span class="highlight-text">《chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích nhỏ, trong khuôn viên còn có trồng một gốc hoa đào.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Minh điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Bách điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tuyền Mịch các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tùy Xuân hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Ngự Hoa viên":`
+    <div class="info-title">Ngự Hoa viên </div>
+    <p><span class="highlight-text">Nơi trồng nhiều loại hoa đẹp và quý hiếm</span></p>
+    `,
+    "Khâm An điện":`
+    <div class="info-title">Khâm An điện </div>
+    <p><span class="highlight-text">Nơi thờ cúng các vị thần linh</span></p>
+    `,
+    "Khôn Ninh cung":`
+    <div class="info-title">
+        Trung cung -
+        <span class="highlight-text">《chủ vị - Hoàng hậu》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích rất lớn, lớn nhất ở hậu cung. Trong khuôn viên còn có trồng các loại mẫu đơn được tiến cống.
+        Trước tiền điện của chính điện có tượng phượng, rùa, hạc bằng vàng mỗi thứ một đôi.
+    </p>
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《Hoàng hậu》</span></p>
+    <p><span class="label">Đông Ân điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Đức điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tỏa Âm các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Lân Hòa các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ngạnh Sơn đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Thượng Nhạc lâu:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Cao Thành hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Giáng Tuyết hiên":`
+    <div class="info-title">Giáng Tuyết hiên </div>
+    <p><span class="highlight-text">Dùng để lưu trữ vật tư của Hoàng đế.</span></p>
+    `,
+    "Càn Thanh cung":`
+    <div class="info-title">
+        Càn Thanh cung -
+        <span class="highlight-text">《chủ vị - Hoàng đế》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích rất lớn, lớn nhất trong tất cả các cung.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《Nơi Hoàng đế thiết triều》</span></p>
+    <p><span class="label">Chiêu Nhân điện:</span> <span class="highlight-text">《Nơi lưu trữ sách vở, tài liệu riêng của Hoàng đế》</span></p>
+    <p><span class="label">Hoằng Đức điện:</span> <span class="highlight-text">《Nơi làm việc, nơi truyền đi các mệnh lệnh của Hoàng đế》</span></p>
+    <p><span class="label">Đoan Ngưng điện:</span> <span class="highlight-text">《Nơi tổ chức yến tiệc cho các buổi lễ lớn》</span></p>
+    <p><span class="label">Mậu Cần điện:</span> <span class="highlight-text">《Nơi Hoàng đế quyết định phạm nhân bị tử hình sau mùa thu. Các quan Đại học sĩ và Học sĩ của Nội các hay các quan của Hình bộ đều sẽ ở đây đợi dụ chỉ quyết định của Hoàng đế》</span></p>
+    `,
+    "Tứ Chấp khố":`
+    <div class="info-title">Tứ Chấp khố </div>
+    <p><span class="highlight-text">Nơi cất giữ và quản lý tư trang, vải vóc, đó là vật tạp dụng hoặc trang phục trong cung.</span></p>
+    `,
+    "Cảnh Phúc cung":`
+    <div class="info-title">Cảnh Phúc cung</div>
+    <p><span class="highlight-text">Nơi nuôi dưỡng các hoàng tử, công chúa khi phi tần không có đủ quyền nuôi dưỡng.</span></p>
+    `,
+    "Thọ Dược phòng":`
+    <div class="info-title">Thọ Dược phòng</div>
+    <p><span class="highlight-text">Nơi lo liệu thuốc men, sức khỏe hằng ngày cho hậu cung.</span></p>
+    `,
+    "Kính Sự phòng":`
+    <div class="info-title">Kính Sự phòng</div>
+    <p><span class="highlight-text">Nơi ghi chép cụ thể ngày, tháng, năm hậu phi được thị tẩm, cũng là nơi ghi chép cụ thể nguyệt sự của hậu phi để rút thẻ kịp thời.</span></p>
+    `,
+    "Cảnh Nhân cung":`
+    <div class="info-title">
+    Đông lục cung -
+        <span class="highlight-text">《Chủ vị - Khiêm Ý tần》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích trung bình, trong khuôn viên còn có trồng một gốc hoa mộc lan.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《Khiêm Ý tần》</span></p>
+    <p><span class="label">Đông Lan điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Cẩn điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Di Hòa các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ngưng Bích các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Thanh Vân đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tầm Thảo hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Mặc Ảnh hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Thừa Càn cung":`
+    <div class="info-title">
+        Đông lục cung -
+        <span class="highlight-text">《Chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích lớn nhất và xa hoa nhất phái Đông lục cung. Trong khuôn viên còn có trồng nhiều chậu hoa hải đường và phù dung.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Toàn điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Kim điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Nghê Hồng các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Bình Nam các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Minh Đức đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Từ Thuận hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tuyết Mị hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Chung Túy cung":`
+    <div class="info-title">
+        Đông lục cung -
+        <span class="highlight-text">《Chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích trung bình, trong khuôn viên còn có trồng các chậu hoa diên vĩ.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Vĩnh điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Vẫn điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Hình Mộng các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tình Thủy các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ung Hòa đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Di Lan hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Lăng Hạm hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Diên Hi cung":`
+    <div class="info-title">
+        Đông lục cung -
+        <span class="highlight-text">《Chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích nhỏ, trong khuôn viên còn có một hồ cá nhỏ.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Phương điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Vận điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Mộc Phù các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Quan Liêu đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Sấu Ân hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Vĩnh Hòa cung":`
+    <div class="info-title">
+        Đông lục cung -
+        <span class="highlight-text">《Chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích trung bình, trong khuôn viên còn có trồng các chậu hoa hồng.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Thuận điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Khê điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Lệ Cảnh các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Thu Vũ các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tâm Hải đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Băng Dịch hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Thính Nguyệt hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Cảnh Dương cung":`
+    <div class="info-title">Đông lục cung -
+        <span class="highlight-text">《Chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích nhỏ, trong khuôn viên còn có một hồ cá nhỏ.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Văn điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Lung điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Diệu Miên các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Liệt Diễm đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Hàn Dung hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Trường An cung":`
+    <div class="info-title">Trường An cung -
+        <span class="highlight-text">《Chủ vị - Cố Luân Vinh Ý Nghi Tuệ Công chúa》</span>
+    </div>
+
+    <p class="info-desc">
+        diện tích trung bình, được Hoàng đế đặc biệt xây riêng cho Cố Luân Vinh Ý Nghi Tuệ Công chúa.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《Cố Luân Vinh Ý Nghi Tuệ Công chúa》</span></p>
+    <p><span class="label">Đông Yên điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Trì điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Linh Quan các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Nguyệt Đình các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Trích Tinh đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tố Minh hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Anh Hoa điện":`
+    <div class="info-title">Anh Hoa điện</div>
+    <p><span class="highlight-text">Nơi tổ chức tiệc trà, thưởng hoa ở hậu cung.</span></p>
+    `,
+    "Thượng Thư phòng":`
+    <div class="info-title">Thượng Thư phòng</div>
+    <p><span class="highlight-text">Nơi các hoàng tử, công chúa học tập.</span></p>
+    `,
+    "Nam Thư phòng":`
+    <div class="info-title">Nam Thư phòng</div>
+    <p><span class="highlight-text">Phòng đọc sách của Hoàng đế.</span></p>
+    `,
+    "Sưởng Âm các":`
+    <div class="info-title">Sưởng Âm các</div>
+    <p><span class="highlight-text">Nơi bảo quản các loại nhạc cụ.</span></p>
+    `,
+    "Sưởng Thư các":`
+    <div class="info-title">Sưởng Thư các</div>
+    <p><span class="highlight-text">Nơi bảo quản các tài liệu quý giá.</span></p>
+    `,
+    "Dưỡng Kỳ các":`
+    <div class="info-title">Dưỡng Kỳ các</div>
+    <p><span class="highlight-text">Nơi bảo quản các đồ vật tiến cống.</span></p>
+    `,
+    "Thọ Trung điện":`
+    <div class="info-title">Thọ Trung điện</div>
+    <p><span class="highlight-text">Nơi cử hành hôn lễ cho hoàng nam chưa phong Vương, Hòa Thạc công chúa.</span></p>
+    `,
+    "Phụng Tiên điện":`
+    <div class="info-title">Phụng Tiên điện</div>
+    <p><span class="highlight-text">Nơi thờ phụng các đời Đế Hậu.</span></p>
+    `,
+    "Nam Tam đường":`
+    <div class="info-title">Nam Tam đường</div>
+    <p><span class="highlight-text">Nơi thờ cúng hoàng thất.</span></p>
+    `,
+    "Hoàng Cực điện":`
+    <div class="info-title">Hoàng Cực điện</div>
+    <p><span class="highlight-text">Nơi lưu giữ tranh ảnh các đời Đế Hậu.</span></p>
+    `,
+    "Từ Ninh cung":`
+    <div class="info-title">Từ Ninh cung -
+        <span class="highlight-text">《Chủ vị - Khang Dụ Hoàng Thái hậu》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích rất lớn, ngang ngửa Khôn Ninh cung. Đây là nơi ngụ của đích mẫu hoặc đế mẫu của Hoàng đế.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《Khang Dụ Hoàng Thái hậu》</span></p>
+    <p><span class="label">Đông Thần điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Lam điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Khang Bình các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Cẩm Thành các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đại phật đường:</span> <span class="highlight-text">Nơi thờ cúng riêng của Từ Ninh cung.</span></p>
+    `,
+    "Trung Hòa điện":`
+    <div class="info-title">Trung Hòa điện</div>
+    <p><span class="highlight-text">Nơi nghỉ ngơi của Hoàng đế sau các buổi lễ, thiết triều.</span></p>
+    `,
+    "Thái Hòa điện":`
+    <div class="info-title">Thái Hòa điện</div>
+    <p><span class="highlight-text">Nơi tổ chức lễ đăng cơ và đại hôn của Đế Hậu.</span></p>
+    `,
+    "Bảo Hòa điện":`
+    <div class="info-title">Bảo Hòa điện</div>
+    <p><span class="highlight-text">Nơi tổ chức khoa thi Đình, hoặc dùng để tổ chức yến tiệc long trọng dành cho các chư hầu, vương công, quan lại cấp nhất, nhị phẩm. Cũng là nơi tổ chức hôn lễ cho hoàng nam đã được phong Vương, và Cố Luân công chúa.</span></p>
+    `,
+    "Thọ Dược phòng":`
+    <div class="info-title">Thọ Dược phòng</div>
+    <p><span class="highlight-text">Nơi lo liệu thuốc men, sức khỏe hàng ngày cho hậu cung.</span></p>
+    `,
+    "Bảo Uẩn lâu":`
+    <div class="info-title">Bảo Uẩn lâu</div>
+    <p><span class="highlight-text">Nơi lưu trữ, bảo quản các cổ vật quý hiếm.</span></p>
+    `,
+    "Nội Vụ phủ":`
+    <div class="info-title">Nội Vụ phủ</div>
+    <p><span class="highlight-text">Nơi coi giữ tài sản, vật dụng cho Hoàng đế và hoàng thất tại nội cung.</span></p>
+    `,
+    "Thái Y viện":`
+    <div class="info-title">Thái Y viện</div>
+    <p><span class="highlight-text">Nơi làm việc của các thái y chuyên lo liệu sức khỏe cho Hoàng đế, hậu cung.</span></p>
+    `,
+    "Ngự Trà phòng":`
+    <div class="info-title">Ngự Trà phòng</div>
+    <p><span class="highlight-text">Nơi bảo quản trà, thức uống hàng ngày của Hoàng đế.</span></p>
+    `,
+    "Ngự Dược phòng":`
+    <div class="info-title">Ngự Dược phòng</div>
+    <p><span class="highlight-text">Nơi bảo quản, lo liệu thuốc men, dược liệu của Hoàng đế.</span></p>
+    `,
+    "Ngự Y phòng":`
+    <div class="info-title">Ngự Y phòng</div>
+    <p><span class="highlight-text">Nơi bảo quản, lo liệu phục sức hàng ngày của Hoàng đế.</span></p>
+    `,
+    "Ngự Thiện phòng":`
+    <div class="info-title">Ngự Thiện phòng</div>
+    <p><span class="highlight-text">Nơi lo liệu bữa ăn hàng ngày của Hoàng đế.</span></p>
+    `,
+    "Nội Các đại đường":`
+    <div class="info-title">Nội các đại đường</div>
+    <p><span class="highlight-text">Cơ quan văn thư, chuyên giữ các bản tấu chương và chiếu chỉ.</span></p>
+    `,
+    "Thất Lực khố":`
+    <div class="info-title">Thất Lực khố</div>
+    <p><span class="highlight-text">Kho lưu trữ hồ sơ mật và tư liệu lịch sử tối cao.</span></p>
+    `,
+    "Đăng Lung khố":`
+    <div class="info-title">Đăng Lung khố</div>
+    <p><span class="highlight-text">Kho xưởng chế tạo và kho vật tư ( Đèn lồng, dụng cụ thắp sáng, đồ trang trí lễ ) phục vụ sinh hoạt hoàng cung.</span></p>
+    `,
+    "Thận Hình ty":`
+    <div class="info-title">Thận Hình ty</div>
+    <p><span class="highlight-text">Nơi chuyên trách việc điều tra, xét xử và thi hành hình phạt trong nội cung, chuyên dùng để trừng trị các cung nữ và thái giám phạm tội</span></p>
+    `,
+    "Văn Hoa điện":`
+    <div class="info-title">Văn Hoa điện</div>
+    <p class="info-desc"><em>Trước Văn Hoa điện còn có đài ngắm trăng, phía trước đài ngắm trăng có một lối đi nối liền với Văn Hoa môn.</em></p>
+    <p><span class="highlight-text">Nơi cử hành Kinh Diên lễ.</span></p>
+    `,
+    "Võ Anh điện":`
+    <div class="info-title">Võ Anh điện</div>
+    <p><span class="highlight-text">Xưởng in sách và tài liệu riêng của triều đình.</span></p>
+    `,
+    "Dục Đức đường":`
+    <div class="info-title">Dục Đức đường</div>
+    <p><span class="highlight-text">Nơi trực sở của các quan viên phụ trách công việc trang trí, hiệu đính và tu sửa các bản thảo trước khi đưa vào khắc in sách.</span></p>
+    `,
+    "Toàn Phúc cung":`
+    <div class="info-title">Toàn Phúc cung</div>
+    <p><span class="highlight-text">Nơi các tú nữ cư ngụ để được dạy các lễ nghi nội đình.</span></p>
+    `,
+    "Khải Tường cung":`
+    <div class="info-title">
+        Tây lục cung -
+        <span class="highlight-text">《chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích nhỏ, trong khuôn viên còn có trồng một gốc mộc lan.
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Lan điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Lan điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Thể Hòa các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Ích Thọ hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Hàm Dương cung":`
+    <div class="info-title">
+        Đông lục cung -
+        <span class="highlight-text">《Chủ vị - trống》</span>
+    </div>
+
+    <p class="info-desc">
+        Diện tích trung bình, trong khuôn viên còn có trồng các chậu hoa
+    </p>
+
+    <p><span class="label">Chính điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Đông Nhạc điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Tây Xương điện:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Miểu Oanh các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Kiểm Tuyền các:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Hồng Linh đường:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Chiểu Mai hiên:</span> <span class="highlight-text">《trống》</span></p>
+    <p><span class="label">Diệu Ánh hiên:</span> <span class="highlight-text">《trống》</span></p>
+    `,
+    "Thái Hòa điện":`
+    <div class="info-title">Thái Hòa điện</div>
+    <p><span class="highlight-text">
+    Nơi tổ chức lễ đăng cơ và đại hôn của Đế Hậu.
+    </span></p>
+    `,
+    "Trung Hòa điện":`
+    <div class="info-title">Trung Hòa điện</div>
+    <p><span class="highlight-text">
+        Nơi nghỉ ngơi của Hoàng đế sau các buổi lễ, thiết triều.
+    </span></p>
+    `,
+    
+};
+        function showInfo(palaceName) {
+            const modal = document.getElementById("infoModal");
+            const content = document.getElementById("modalContent");
+
+            content.innerHTML = palaceData[palaceName] || "Đang cập nhật...";
+
+            modal.classList.add("active");
+
+            document.getElementById("modalTitle").style.display = "none";
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').classList.remove('active');
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('infoModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    const btn = document.querySelector(".menu-toggle");
+    const menu = document.getElementById("mobileMenu");
+
+    btn.addEventListener("click", () => {
+        menu.classList.toggle("show");
+    });
+let lastScrollTop = 0;
+
+window.addEventListener("scroll", function () {
+
+    const navbar = document.querySelector(".navbar-custom");
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop && currentScroll > 80) {
+        // Lướt xuống → ẩn NAV
+        navbar.classList.add("nav-hidden");
+
+    } else if (currentScroll < lastScrollTop) {
+        // Lướt lên → hiện NAV
+        navbar.classList.remove("nav-hidden");
+    }
+
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+});
+</script>
+</body>
+</html>

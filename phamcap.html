@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Phẩm Cấp</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <style>
+.info-frame{
+    position: relative;
+    width:94%;
+    max-width:1550px;
+    margin:40px auto;
+    padding:45px 10px;
+    min-height: 650px;
+    height: 650px;
+    background-image:url("img/nenthongtin.jpg");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    background-position:center 50px; /* dịch xuống 30px */
+}
+.pham-grid{
+    position: relative;
+    margin-top: 40px;
+}
+
+.pham-row{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    justify-items:center;
+    width:100%;
+    margin-bottom:60px;
+}
+
+.bottom-row{
+    margin-top:10px;   /* nếu muốn chỉ chỉnh khoảng cách với hàng trên */
+}
+.pham-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pham-item img{
+    width:140px;
+    height:auto;
+    display:block;
+}
+
+.pham-item button{
+    margin-top:-8px;
+    border:none;
+    background:#b5953f;
+    color:white;
+    padding:8px 30px;
+    border-radius:30px;
+    font-size:17px;
+    font-family:"Alegreya",serif;
+    cursor:pointer;
+}
+
+.pham-item button:hover{
+    background:#9f7d25;
+}
+.pham-btn{
+    min-width: 140px;      /* nhỏ hơn */
+    padding: 6px 18px;
+    font-size: 18px;
+    border-radius: 25px;
+}
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9998;
+}
+
+.info-box{
+    display:none;
+    position:fixed;
+    width:760px;
+    max-width:90%;
+    background:#fffdf6;
+    border:3px solid #b5953f;
+    border-radius:25px;
+    padding:35px 45px;
+    z-index:9999;
+}
+
+.info-box h2{
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.info-box p{
+    font-size:26px;
+    line-height:1.8;
+}
+.info-box h2{
+    text-align:center;
+    font-size:30px;
+    font-weight:800;
+    color:#9f7d25;
+    margin-bottom:18px;
+}
+.info-box h3{
+    text-align:center;
+    font-size:30px;
+    font-weight:800;
+    color:#9f7d25;
+    margin-bottom:18px;
+
+}
+
+.info-box p{
+    font-size:24px;
+    line-height:1.8;
+    color:#8d7530;
+    text-align:center;
+}
+
+.info-box p b{
+    color:#8b6b1b;
+}
+/* ================= MOBILE ================= */
+@media (max-width:768px){
+
+.info-frame{
+    width:100%;
+    height:auto;
+    min-height:auto;
+    padding:20px 10px 40px;
+    margin:20px auto;
+}
+
+.pham-grid{
+    margin-top:40px;
+}
+
+/* Gộp 2 hàng thành 1 grid */
+.pham-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px 15px;
+    justify-items:center;
+}
+
+/* Bỏ layout của từng hàng */
+.pham-row{
+    display:contents;
+}
+
+.bottom-row{
+    display:contents;
+}
+
+.pham-item img{
+    width:90px;
+}
+
+.pham-item button{
+    width:95px;
+    padding:5px 8px;
+    margin-top:5px;
+    font-size:12px;
+    border-radius:20px;
+}
+
+/* Ô thông tin */
+.info-box{
+    width:90%;
+    max-width:none;
+    left:5% !important;
+    right:5%;
+    top:50% !important;
+    transform:translateY(-50%);
+    padding:20px;
+    border-radius:18px;
+}
+
+.info-box h2{
+    font-size:24px;
+    margin-bottom:10px;
+    text-align:center;
+}
+
+.info-box p{
+    font-size:16px;
+    line-height:1.7;
+    text-align:justify;
+}
+
+/* Overlay */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.25);
+}
+
+/* Menu */
+.navbar-custom{
+    flex-wrap:wrap;
+}
+
+.menu-right{
+    width:100%;
+}
+}
+
+        </style>
+        </head>
+        <body>
+            <!-- Banner Background -->
+        <div class="banner" style="background-image:url('img/nen.jpg');">
+
+            <!-- Navbar -->
+            <div class="navbar-custom">
+                <!-- bên trái -->
+                <a href="index.html">TRANG CHỦ</a>
+<button class="menu-toggle" type="button">☰ MỤC LỤC</button>
+
+                <!-- bên phải -->
+                <div class="menu-right" id="mobileMenu">
+                    <a href="thoigian.html">THỜI GIAN</a>
+
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                            HẬU CUNG
+                        </a>
+                        <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienhc.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="cungquy.html">Cung quy</a></li>
+                <li><a class="dropdown-item" href="phamcap.html">Phẩm cấp</a></li>
+                <li><a class="dropdown-item" href="hautam.html">Hầu tẩm</a></li>
+                <li><a class="dropdown-item" href="tanmach.html">Mạch<br>   tấn/giáng</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="dropdown">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                HOÀNG THẤT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="vaidienht.html">Vai diễn</a></li>
+                <li><a class="dropdown-item" href="lenghi.html">Lễ nghi</a></li>
+            </ul>
+
+        </div>
+
+
+        <a href="SoDo.html">SƠ ĐỒ</a>
+
+
+        <div class="dropdown dtt-menu">
+
+            <a href="#" 
+            class="dropdown-toggle" 
+            data-bs-toggle="dropdown">
+                ĐTT
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cachtinh.html">Cách<br>tính</a></li>
+                <li><a class="dropdown-item" href="capnhat.html">Cập<br>nhật<br>ĐTT</a></li>
+            </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="info-frame">
+                <div class="pham-grid">
+
+    <!-- Khung thông tin -->
+
+
+    <!-- Hàng 1 -->
+    <div class="pham-row">
+        <div class="pham-item">
+            <img src="img/hh.jpg" alt="">
+            <button onclick="showInfo(event,'hoanghau')"><b> HOÀNG HẬU</b></button>
+        </div>
+
+        <div class="pham-item">
+            <img src="img/nhat.jpg" alt="">
+            <button onclick="showInfo(event,'nhatpham')"><b>NHẤT PHẨM</b></button>
+        </div>
+
+        <div class="pham-item">
+            <img src="img/nhi.jpg" alt="">
+            <button onclick="showInfo(event,'nhipham')"><b>NHỊ PHẨM</b></button>
+        </div>
+
+        <div class="pham-item">
+            <img src="img/tam.jpg" alt="">
+            <button onclick="showInfo(event,'tampham')"><b>TAM PHẨM</b></button>
+        </div>
+
+        <div class="pham-item">
+            <img src="img/tu.jpg" alt="">
+            <button onclick="showInfo(event,'tupham')"><b>TỨ PHẨM</b></button>
+        </div>
+    </div>
+
+    <!-- Hàng 2 -->
+    <div class="pham-row bottom-row">
+        <div class="pham-item">
+            <img src="img/ngu.jpg" alt="">
+            <button onclick="showInfo(event,'ngupham')"><b>NGŨ PHẨM</b></button>
+        </div>
+
+        <div class="pham-item">
+            <img src="img/luc.jpg" alt="">
+            <button onclick="showInfo(event,'lucpham')"><b>LỤC PHẨM</b></button>
+        </div>
+
+        <div class="pham-item">
+            <img src="img/that.jpg" alt="">
+            <button onclick="showInfo(event,'thatpham')"><b>THẤT PHẨM</b></button>
+        </div>
+    </div>
+
+</div>
+        </div>
+        <script>
+
+const data = {
+
+    hoanghau:{
+        title:"MẪU NGHI",
+        text:"Duy nhất một người tại vị, nội đình chi chủ, thân phận Chủ nội trị. Hoàng hậu nắm giữ Phượng ấn, quản lý nội đình, quyết đoạt mọi việc lớn nhỏ trong hậu cung."
+    },
+
+    nhatpham:{
+        title: "NƯƠNG NƯƠNG",
+    text: "<b>Chính nhất phẩm:</b> Hoàng Quý phi, 1 người.<br><b>Tòng nhất phẩm:</b> Hoàng phi, 2 người."
+    },
+
+    nhipham:{
+        title: "NƯƠNG NƯƠNG",
+        text: "<b>Chính nhị phẩm:</b> Quý phi, 2 người.<br><b>Tòng nhị phẩm:</b> Phu nhân, 4 người"
+    },
+
+    tampham:{
+       title: "NƯƠNG NƯƠNG",
+        text: `
+        <b>Chính tam phẩm:</b> Lục giai phi, 6 người. Thục phi, Đức phi, Hiền phi, Trang phi, Lương phi, Tuyên phi, Lệ phi.
+        <br><br>
+        <b>Tòng tam phẩm:</b> Tiệp dư, 6 người
+        `
+    },
+
+    tupham:{
+        title:"NƯƠNG NƯƠNG",
+        text:`
+        <b>Chính tứ phẩm:</b> Cửu giai tần, 9 người. Vinh tần, Khiêm tần, Kính tần, Hòa tần, Thuận tần, Ý tần, Ngọc tần, Nhàn tần, Gia tần.
+        <br><br>
+        <h3><b>TIÊU CHỦ</b></h3>
+        <b>Tòng tứ phẩm:</b> Dung hoa, 10 người.
+        `
+    },
+
+    ngupham:{
+        "title": "TIỂU CHỦ",
+        "text": "<b>Chính ngũ phẩm:</b> Quý nhân, 10 người.<br><b>Tòng ngũ phẩm:</b> Túc nghi, 10 người"
+    },
+
+    lucpham:{
+        title:"TIỂU CHỦ",
+        text:"<b>Chính lục phẩm:</b> Thường tại, vô hạn định<br><b>Tòng lục phẩm:</b>Bất tử, vô hạn định"
+    },
+
+    thatpham:{
+        title:"TIỂU CHỦ",
+        text:"<b>Chính thất phẩm:</b>Đáp ứng, vô hạn định"
+    }
+
+};
+
+function showInfo(event, id){
+
+    document.getElementById("infoTitle").innerHTML = data[id].title;
+    document.getElementById("infoText").innerHTML = data[id].text;
+
+    const infoBox = document.getElementById("infoBox");
+    const overlay = document.getElementById("overlay");
+
+    // Hiện overlay
+    overlay.style.display = "block";
+
+    // Hiện infoBox để lấy kích thước
+    infoBox.style.display = "block";
+
+    const btn = event.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    // Mobile: luôn hiện giữa màn hình
+    if(window.innerWidth <= 768){
+    overlay.style.display = "block";
+    infoBox.style.display = "block";
+
+    infoBox.style.left = "5%";
+    infoBox.style.right = "5%";
+    infoBox.style.top = "50%";
+    infoBox.style.transform = "translateY(-50%)";
+
+    return;
+}
+
+    const boxWidth = infoBox.offsetWidth;
+    const boxHeight = infoBox.offsetHeight;
+
+    // ===== Căn trái/phải =====
+    let left = rect.left;
+
+    if(left + boxWidth > window.innerWidth - 20){
+        left = window.innerWidth - boxWidth - 20;
+    }
+
+    if(left < 20){
+        left = 20;
+    }
+
+    // ===== Căn trên/dưới =====
+    let top = rect.bottom + 10;
+
+    // Nếu không đủ chỗ phía dưới thì hiện phía trên
+    if(top + boxHeight > window.innerHeight - 20){
+        top = rect.top - boxHeight - 10;
+    }
+
+    // Nếu phía trên cũng không đủ
+    if(top < 20){
+        top = 20;
+    }
+
+    infoBox.style.left = left + "px";
+    infoBox.style.top = top + "px";
+}
+function closeInfo(){
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("infoBox").style.display = "none";
+}
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+const btn=document.querySelector(".menu-toggle");
+const menu=document.getElementById("mobileMenu");
+if(btn&&menu){btn.addEventListener("click",()=>menu.classList.toggle("show"));}
+</script>
+<div id="overlay" class="overlay" onclick="closeInfo()"></div>
+    <div id="infoBox" class="info-box">
+        <h2 id="infoTitle"></h2>
+        <p id="infoText"></p>
+    </div>
+        </body>
+        </html>
